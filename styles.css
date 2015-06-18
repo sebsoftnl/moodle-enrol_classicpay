@@ -1,0 +1,134 @@
+/*
+// This file is part of Moodle - http://moodle.org/
+//
+// Moodle is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+//
+// Moodle is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
+
+ * general tool specific CSS rules
+ *
+ * @package     enrol_classicpay
+ *
+ * @copyright   Sebsoft.nl
+ * @author      R.J. van Dongen <rogier@sebsoft.nl>
+ * @license     http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ */
+
+div.enrol-classicpay-logopromo a img {
+    height: 37px;
+}
+.enrol-classicpay-strike {
+    text-decoration: line-through;
+    color: #880000;
+}
+#enrol-classicpay-coupondiscount {
+    color: #008800;
+}
+.enrol-classicpay-warn {
+    background-color: #ffdddd;
+    color: #880000;
+    padding: 10px;
+    border-radius: 3px;
+    -moz-border-radius: 3px;
+    -webkit-border-radius: 3px;
+}
+.enrol-classicpay-info {
+    background-color: #ddddff;
+    color: #000088;
+    padding: 10px;
+    border-radius: 3px;
+    -moz-border-radius: 3px;
+    -webkit-border-radius: 3px;
+}
+
+/* SPRITE IMAGES */
+.pp_s25 {
+    background-image: url([[pix:enrol_classicpay|sprite]]);
+    background-repeat: no-repeat;
+    background-color: transparent;
+    background-position: 25px 25px;
+    width:25px;
+    height:25px;
+    display:inline-block;
+    vertical-align: bottom;
+}
+
+/* ideal */
+.pp_s25.pp10{ background-position: 0 0; width: 25px; height: 25px; }
+/* creditcard */
+.pp_s25.pp11,.pp_s25.pp706,.pp_s25.pp709,
+.pp_s25.pp902{background-position: 0 -75px; width: 25px; height: 25px; }
+/* overboeking */
+.pp_s25.pp136{ background-position: 0 -150px; width: 25px; height: 25px; }
+/* transfer */
+.pp_s25.pp136.gb{ background-position: 0 -225px; width: 25px; height: 25px; }
+/* incasso */
+.pp_s25.pp137{ background-position: 0 -300px; width: 25px; height: 25px; }
+/* direct debit */
+.pp_s25.pp137.gb{ background-position: 0 -375px; width: 25px; height: 25px; }
+/* incasse storno */
+.pp_s25.pp445{ background-position: 0 -450px; width: 25px; height: 25px; }
+/* paypal */
+.pp_s25.pp138{ background-position: 0 -525px; width: 25px; height: 25px; }
+/* click & buy */
+.pp_s25.pp139{ background-position: 0 -600px; width: 25px; height: 25px; }
+/* mistercash */
+.pp_s25.pp436{ background-position: 0 -675px; width: 25px; height: 25px; }
+/* paysafecard */
+.pp_s25.pp553{ background-position: 0 -750px; width: 25px; height: 25px; }
+/* direct e-banking */
+.pp_s25.pp556,.pp_s25.pp559,.pp_s25.pp562,.pp_s25.pp565,.pp_s25.pp568,.pp_s25.pp571,
+.pp_s25.pp574,.pp_s25.pp577,.pp_s25.pp580,.pp_s25.pp583,.pp_s25.pp586,.pp_s25.pp589,
+.pp_s25.pp592,.pp_s25.pp595,.pp_s25.pp598,.pp_s25.pp601,.pp_s25.pp604,
+.pp_s25.pp607{ background-position: 0 -825px; width: 25px; height: 25px; }
+/* giropay */
+.pp_s25.pp694{ background-position: 0 -900px; width: 25px; height: 25px; }
+/* postepay */
+.pp_s25.pp707,
+.pp_s25.pp708{ background-position: 0 -975px; width: 25px; height: 25px; }
+/* carte bleue */
+.pp_s25.pp710,
+.pp_s25.pp711{ background-position: 0 -1050px; width: 25px; height: 25px; }
+/* maestro */
+.pp_s25.pp712,
+.pp_s25.pp715{ background-position: 0 -1125px; width: 25px; height: 25px; }
+/* afterpay */
+.pp_s25.pp740,
+.pp_s25.pp739{ background-position: 0 -1200px; width: 25px; height: 25px; }
+/* minitix */
+.pp_s25.pp808{ background-position: 0 -1275px; width: 25px; height: 25px; }
+/* webshopgiftcard */
+.pp_s25.pp811{ background-position: 0 -1350px; width: 25px; height: 25px; }
+/* microincasso */
+.pp_s25.pp825{ background-position: 0 -1425px; width: 25px; height: 25px; }
+/* mobile content billing */
+.pp_s25.pp829{ background-position: 0 -1500px; width: 25px; height: 25px; }
+/* betaal me later */
+.pp_s25.pp958{ background-position: 0 -1575px; width: 25px; height: 25px; }
+/* paylink */
+.pp_s25.pp961{ background-position: 0 -1650px; width: 25px; height: 25px; }
+/* e-bon */
+.pp_s25.pp998{ background-position: 0 -1725px; width: 25px; height: 25px; }
+/* mopay */
+.pp_s25.pp999{ background-position: 0 -1800px; width: 25px; height: 25px; }
+/* mybank */
+.pp_s25.pp1588{ background-position: 0 -1875px; width: 25px; height: 25px; }
+/* bitcoin */
+.pp_s25.pp1594{ background-position: -75px 0; width: 25px; height: 25px; }
+/* gezondheidsbon */
+.pp_s25.pp812{ background-position: -75px -75px; width: 25px; height: 25px; }
+/* fashioncheque */
+.pp_s25.pp815{ background-position: -75px -150px; width: 25px; height: 25px; }
+/* podium cadeaukaart */
+.pp_s25.pp816{ background-position: -75px -225px; width: 25px; height: 25px; }
+/* yourgift */
+.pp_s25.pp1645{ background-position: -75px -300px; width: 25px; height: 25px; }
