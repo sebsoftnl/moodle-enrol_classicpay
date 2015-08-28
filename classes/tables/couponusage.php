@@ -85,13 +85,14 @@ class couponusage extends \table_sql {
      */
     public function render($pagesize, $useinitialsbar = true) {
         global $DB;
-        $this->define_columns(array('courseid', 'username', 'code', 'percentage', 'statusname',
+        $this->define_columns(array('courseid', 'username', 'code', 'type', 'value', 'statusname',
             'timecreated', 'numused', 'maxusage'));
         $this->define_headers(array(
             get_string('th:courseid', 'enrol_classicpay'),
             get_string('th:user', 'enrol_classicpay'),
             get_string('th:code', 'enrol_classicpay'),
-            get_string('th:percentage', 'enrol_classicpay'),
+            get_string('th:type', 'enrol_classicpay'),
+            get_string('th:value', 'enrol_classicpay'),
             get_string('th:status', 'enrol_classicpay'),
             get_string('th:paymentcreated', 'enrol_classicpay'),
             get_string('th:numused', 'enrol_classicpay'),
@@ -99,7 +100,7 @@ class couponusage extends \table_sql {
             get_string('th:action', 'enrol_classicpay'))
         );
 
-        $fields = "cu.id, c.id as couponid, c.courseid, c.code, c.percentage, c.validfrom, "
+        $fields = "cu.id, c.id as couponid, c.courseid, c.code, c.type, c.value, c.validfrom, "
                 . "c.validto, c.maxusage, c.numused, cp.timecreated, cp.timemodified, "
                 . "cp.userid, cp.status, cp.statusname, " . $DB->sql_fullname() . " AS username";
         $from = "{enrol_classicpay_coupon} c
@@ -146,13 +147,27 @@ class couponusage extends \table_sql {
     }
 
     /**
-     * Render visual representation of the 'percentage' column for use in the table
+     * Render visual representation of the 'type' column for use in the table
      *
      * @param \stdClass $row
-     * @return string time string
+     * @return localised type string
      */
-    public function col_percentage($row) {
-        return $row->percentage . '%';
+    public function col_type($row) {
+        return get_string('coupontype:' . $row->type, 'enrol_classicpay');
+    }
+
+    /**
+     * Render visual representation of the 'value' column for use in the table
+     *
+     * @param \stdClass $row
+     * @return formatted value
+     */
+    public function col_value($row) {
+        $rs = number_format($row->value, 2);
+        if ($row->type === 'percentage') {
+            $rs .= ' %';
+        }
+        return $rs;
     }
 
     /**

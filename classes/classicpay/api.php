@@ -191,6 +191,9 @@ class api {
             'svcid' => get_config('enrol_classicpay', 'paynlserviceid')
         );
         $arrreturn = $this->do_request('serviceprofiles.php', $params);
+        if (isset($arrreturn->error)) {
+            throw new exception(get_string('err:getserviceprofiles', 'enrol_classicpay', $arrreturn));
+        }
         foreach ($arrreturn->result as $profile) {
             $profiles[$profile->id] = (object)array(
                 'id' => $profile->id,
@@ -290,7 +293,11 @@ class api {
         $cuse = $DB->get_record('enrol_classicpay_cuse', array('classicpayid' => $transaction->id));
         if ($cuse) {
             $coupon = $DB->get_record('enrol_classicpay_coupon', array('id' => $cuse->couponid));
-            $discount = intval((($coupon->percentage / 100) * $plugininstance->cost) * -100);
+            if ($coupon->type === 'percentage') {
+                $discount = intval((($coupon->value / 100) * $plugininstance->cost) * -100);
+            } else if ($coupon->type === 'value') {
+                $discount = intval($coupon->value * -100);
+            }
             $pdata[] = array('description' => 'COUPON', 'price' => $discount, 'quantity' => 1);
         }
         $params['pdata'] = base64_encode(json_encode($pdata));

@@ -56,23 +56,29 @@ class cppapply extends \moodleform {
         $result = $cpapi->check_classicpayplus();
         $iscpp = (bool)$result->result;
         // Apply or not.
-        if ($iscpp) {
-            $str = '<div class="enrol-classicpay-info"><img src="'.$OUTPUT->pix_url('i/completion-auto-y').'"/> '
-                    .get_string('classicpay:plus:status:valid', 'enrol_classicpay').'</div>';
+        if (isset($result->error)) {
+            $str = '<div class="enrol-classicpay-info">'
+                    .get_string('classicpay:plus:status:error', 'enrol_classicpay', $result->error).'</div>';
             $mform->addElement('static', 'cppstatus', '', $str);
-            $submitlabel = get_string('cppapply:disable', 'enrol_classicpay');
-            $mform->addElement('hidden', 'enable', 0);
         } else {
-            $str = '<div class="enrol-classicpay-info"><img src="'.$OUTPUT->pix_url('i/completion-auto-n').'"/> '
-                    .get_string('classicpay:plus:status:invalid', 'enrol_classicpay').'</div>';
-            $mform->addElement('static', 'cppstatus', '', $str);
-            $submitlabel = get_string('cppapply:enable', 'enrol_classicpay');
-            $mform->addElement('hidden', 'enable', 1);
-        }
-        $mform->setType('enable', PARAM_INT);
-        $mform->addElement('static', 'static_', '', get_string('classicpay:plus:description', 'enrol_classicpay'));
+            if ($iscpp) {
+                $str = '<div class="enrol-classicpay-info"><img src="'.$OUTPUT->pix_url('i/completion-auto-y').'"/> '
+                        .get_string('classicpay:plus:status:valid', 'enrol_classicpay').'</div>';
+                $mform->addElement('static', 'cppstatus', '', $str);
+                $submitlabel = get_string('cppapply:disable', 'enrol_classicpay');
+                $mform->addElement('hidden', 'enable', 0);
+            } else {
+                $str = '<div class="enrol-classicpay-info"><img src="'.$OUTPUT->pix_url('i/completion-auto-n').'"/> '
+                        .get_string('classicpay:plus:status:invalid', 'enrol_classicpay').'</div>';
+                $mform->addElement('static', 'cppstatus', '', $str);
+                $submitlabel = get_string('cppapply:enable', 'enrol_classicpay');
+                $mform->addElement('hidden', 'enable', 1);
+            }
+            $mform->setType('enable', PARAM_INT);
+            $mform->addElement('static', 'static_', '', get_string('classicpay:plus:description', 'enrol_classicpay'));
 
-        $mform->addElement('submit', 'button', $submitlabel);
+            $mform->addElement('submit', 'button', $submitlabel);
+        }
     }
 
     /**
@@ -108,7 +114,9 @@ class cppapply extends \moodleform {
         $api = new \enrol_classicpay\classicpay\api();
         $result = $api->apply_classicpayplus((bool)$data->enable);
 
-        if ($result->result === true) {
+        if (isset($result->error)) {
+            $message = get_string('apply:cpp:error', 'enrol_classicpay', $result->error);
+        } else if ($result->result === true) {
             $message = get_string('apply:cpp:success', 'enrol_classicpay');
             set_config('isclassicpayplus', 1, 'enrol_classicpay');
         } else {

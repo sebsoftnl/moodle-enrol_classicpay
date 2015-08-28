@@ -261,6 +261,7 @@ $string['task:sync_cpplus'] = 'Synchroniseert of we een classicpay PLUS account 
 $string['task:request_invoices'] = 'Synchroniseert factuur verzoek queue';
 $string['classicpay:plus:status:valid'] = 'Je hebt een classicpay plus account';
 $string['classicpay:plus:status:invalid'] = 'Je hebt <i>geen</i> classicpay plus account.';
+$string['classicpay:plus:status:error'] = 'Fout tijdens controleren classicpay plus account: {$a}';
 $string['classicpay:plus:description'] = '<div class="enrol-classicpay-info">Wanneer je een Classicpay Plus account aanvraagt, betekent dit dat je je aanmeldt voor het genereren van facturen.<br/>
 Dit brengt extra kosten met zich mee, maar heeft als voordeel dat zowel jij als de eindgebruiker van ons automatisch een factuur krijgt wanneer een cursus wordt aangekocht.<br/>
 Door Classicpay Plus in te schakelen ga je automatisch akkoord met het in rekening brengen van 10 cent, bovenop de transactiekosten, per transactie.<br/>
@@ -277,8 +278,10 @@ Indien je een van deze optie inschakelt, zul je van ons een bevestigingsemail kr
 
 $string['apply:cpp:success'] = 'Classic Pay plus account succesvol gewijzigd';
 $string['apply:cpp:fail'] = 'Fout bij wijzigen Classic Pay plus account';
+$string['apply:cpp:error'] = 'Fout bij wijzigen Classic Pay plus account: {$a}';
 $string['cppapply:header'] = 'Classicpay Plus account status';
 $string['button:cppo:update'] = 'Betalingsmethoden updaten';
+$string['err:getserviceprofiles'] = 'Fout bij ophalen betalingsmethoden: {$a->error}';
 $string['err:setserviceprofiles'] = 'Fout bij updaten betalingsmethoden: {$a->error}';
 $string['setserviceprofiles:success'] = 'Betalingsmethoden succesvol bijgewerkt:<br/>{$a}';
 $string['warn:servicepage'] = '<div class="enrol-classicpay-warn">Elke actie die je hier uitvoert zal op onze Classicpay service worden uitgevoerd.<br/>
@@ -306,3 +309,11 @@ Alle aansprakelijkheid wordt bij voorbaat afgewezen.</p>
 <p>U als merchant (of website eigenaar) gaat een contract aan met Pay.nl ten behoeve van het verkrijgen van de door u geïncasseerde gelden.<br/>
 De uitbetaling wordt verzorgd door Stichting Derdengelden Pay.nl.<br/>
 Sebsoft stuurt u een factuur voor alle transacties en/of de gemaakte facturen (van toepassing voor ClassicPay Plus).</p>';
+
+$string['coupontype'] = 'Type';
+$string['coupontype:percentage'] = 'Percentage';
+$string['coupontype:value'] = 'Waarde';
+$string['valuemissing'] = 'Er moet een waarde worden opgegeven';
+$string['err:value-negative'] = 'Korting kan niet negatief zijn';
+$string['th:type'] = 'Type';
+$string['th:value'] = 'Waarde';

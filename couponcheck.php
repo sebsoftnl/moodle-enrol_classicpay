@@ -64,10 +64,16 @@ if (!$enrol) {
 
 // Generate result.
 $rs = array();
-$discount = intval($coupon->percentage * $enrol->cost) / 100;
+if ($coupon->type === 'percentage') {
+    $percentage = $coupon->value;
+    $discount = intval($coupon->value * $enrol->cost) / 100;
+} else {
+    $discount = floatval($coupon->value);
+    $percentage = intval(100 * ($coupon->value / $enrol->cost));
+}
 $rs['currency'] = $enrol->currency;
 $rs['cost'] = format_float($enrol->cost);
-$rs['percentage'] = format_float($coupon->percentage, 2, true) . '%';
+$rs['percentage'] = format_float($percentage, 2, true) . '%';
 $rs['discount'] = format_float($discount, 2, true);
 $rs['newprice'] = format_float($enrol->cost - $discount, 2, true);
 $rs = (object) $rs;

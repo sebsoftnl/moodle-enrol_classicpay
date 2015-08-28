@@ -168,12 +168,13 @@ class coupons extends \table_sql {
      * @param bool $useinitialsbar
      */
     protected function render_all($pagesize, $useinitialsbar = true) {
-        $this->define_columns(array('courseid', 'code', 'percentage', 'status',
+        $this->define_columns(array('courseid', 'code', 'type', 'value', 'status',
             'validfrom', 'validto', 'numused', 'maxusage', 'action'));
         $this->define_headers(array(
             get_string('th:courseid', 'enrol_classicpay'),
             get_string('th:code', 'enrol_classicpay'),
-            get_string('th:percentage', 'enrol_classicpay'),
+            get_string('th:type', 'enrol_classicpay'),
+            get_string('th:value', 'enrol_classicpay'),
             get_string('th:status', 'enrol_classicpay'),
             get_string('th:validfrom', 'enrol_classicpay'),
             get_string('th:validto', 'enrol_classicpay'),
@@ -246,13 +247,27 @@ class coupons extends \table_sql {
     }
 
     /**
-     * Render visual representation of the 'percentage' column for use in the table
+     * Render visual representation of the 'type' column for use in the table
      *
      * @param \stdClass $row
-     * @return string time string
+     * @return localised type string
      */
-    public function col_percentage($row) {
-        return $row->percentage . '%';
+    public function col_type($row) {
+        return get_string('coupontype:' . $row->type, 'enrol_classicpay');
+    }
+
+    /**
+     * Render visual representation of the 'value' column for use in the table
+     *
+     * @param \stdClass $row
+     * @return formatted value
+     */
+    public function col_value($row) {
+        $rs = number_format($row->value, 2);
+        if ($row->type === 'percentage') {
+            $rs .= ' %';
+        }
+        return $rs;
     }
 
     /**

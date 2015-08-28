@@ -84,10 +84,18 @@ class coupon extends \moodleform {
         $mform->addElement('date_selector', 'validto', get_string('validto', 'enrol_classicpay'));
         $mform->addRule('validto', get_string('validtomissing', 'enrol_classicpay'), 'required', null, 'client');
 
-        $mform->addElement('text', 'percentage', get_string('percentage', 'enrol_classicpay'));
-        $mform->addRule('percentage', get_string('percentagemissing', 'enrol_classicpay'), 'required', null, 'client');
-        $mform->addRule('percentage', null, 'numeric', null, 'client');
-        $mform->setType('percentage', PARAM_FLOAT);
+        $types = array(
+            'percentage' => get_string('coupontype:percentage', 'enrol_classicpay'),
+            'value' => get_string('coupontype:value', 'enrol_classicpay')
+        );
+        $mform->addElement('select', 'type', get_string('coupontype', 'enrol_classicpay'), $types);
+        $mform->setDefault('type', 'percentage');
+        $mform->setType('type', PARAM_ALPHA);
+
+        $mform->addElement('text', 'value', get_string('value', 'enrol_classicpay'));
+        $mform->addRule('value', get_string('valuemissing', 'enrol_classicpay'), 'required', null, 'client');
+        $mform->addRule('value', null, 'numeric', null, 'client');
+        $mform->setType('value', PARAM_FLOAT);
 
         $mform->addElement('text', 'maxusage', get_string('maxusage', 'enrol_classicpay'), 'maxlength="6" size="6"');
         $mform->addRule('maxusage', null, 'numeric', null, 'client');
@@ -120,11 +128,17 @@ class coupon extends \moodleform {
             $errors['validfrom'] = get_string('validfromhigherthanvalidto', 'enrol_classicpay');
         }
 
-        if ((float)$data['percentage'] < 0.00) {
-            $errors['percentage'] = get_string('err:percentage-negative', 'enrol_classicpay');
-        }
-        if ((float)$data['percentage'] > 100.00) {
-            $errors['percentage'] = get_string('err:percentage-exceed', 'enrol_classicpay');
+        if ($data['type'] === 'percentage') {
+            if ((float)$data['value'] < 0.00) {
+                $errors['value'] = get_string('err:percentage-negative', 'enrol_classicpay');
+            }
+            if ((float)$data['value'] > 100.00) {
+                $errors['value'] = get_string('err:percentage-exceed', 'enrol_classicpay');
+            }
+        } else if ($data['type'] === 'value') {
+            if ((float)$data['value'] < 0.00) {
+                $errors['value'] = get_string('err:value-negative', 'enrol_classicpay');
+            }
         }
 
         return $errors;
@@ -172,7 +186,8 @@ class coupon extends \moodleform {
             $instance->code = $data->code;
             $instance->validfrom = $data->validfrom;
             $instance->validto = $data->validto;
-            $instance->percentage = $data->percentage;
+            $instance->type = $data->type;
+            $instance->value = $data->value;
             $instance->maxusage = $data->maxusage;
             $instance->timemodified = time();
             $DB->update_record('enrol_classicpay_coupon', $instance);
@@ -183,7 +198,8 @@ class coupon extends \moodleform {
             $instance->code = $data->code;
             $instance->validfrom = $data->validfrom;
             $instance->validto = $data->validto;
-            $instance->percentage = $data->percentage;
+            $instance->type = $data->type;
+            $instance->value = $data->value;
             $instance->timecreated = time();
             $instance->timemodified = time();
             $instance->maxusage = $data->maxusage;

@@ -29,6 +29,7 @@
 
 namespace enrol_classicpay\classicpay\forms;
 use enrol_classicpay\classicpay\api;
+use enrol_classicpay\classicpay\exception as apiexception;
 
 require_once($CFG->libdir . '/formslib.php');
 
@@ -52,35 +53,39 @@ class cppoapply extends \moodleform {
 
         $cpapi = new api();
         // PaymentProfiles.
-        $profiles = $cpapi->get_servicepaymentprofiles();
-        // Payment profiles.
-        $mform->addElement('header', 'hprofile_', get_string('cppoapply:header:paymentprofiles', 'enrol_classicpay'));
-        $options = array();
-        $options1 = array();
-        $defaults = array();
-        foreach ($profiles as $profile) {
-            $name = 'paymentprofile[' . $profile->id . ']';
-            $label = '';
-            $label .= '<div class="pp_s25 pp' . $profile->id . '"></div>&nbsp;';
-            if ($profile->enabled) {
-                $defaults[$name] = 1;
+        try {
+            $profiles = $cpapi->get_servicepaymentprofiles();
+            // Payment profiles.
+            $mform->addElement('header', 'hprofile_', get_string('cppoapply:header:paymentprofiles', 'enrol_classicpay'));
+            $options = array();
+            $options1 = array();
+            $defaults = array();
+            foreach ($profiles as $profile) {
+                $name = 'paymentprofile[' . $profile->id . ']';
+                $label = '';
+                $label .= '<div class="pp_s25 pp' . $profile->id . '"></div>&nbsp;';
+                if ($profile->enabled) {
+                    $defaults[$name] = 1;
+                }
+                $label .= $profile->name;
+                if (!empty($profile->settings)) {
+                    $label .= '<span style="color:red"> *</span>';
+                    $options1[] = $mform->createElement('advcheckbox', $name, '', $label, null, array(0, 1));
+                } else {
+                    $options[] = $mform->createElement('advcheckbox', $name, '', $label, null, array(0, 1));
+                }
             }
-            $label .= $profile->name;
-            if (!empty($profile->settings)) {
-                $label .= '<span style="color:red"> *</span>';
-                $options1[] = $mform->createElement('advcheckbox', $name, '', $label, null, array(0, 1));
-            } else {
-                $options[] = $mform->createElement('advcheckbox', $name, '', $label, null, array(0, 1));
-            }
+            $mform->addElement('static', '_simple', '', get_string('cppoapply:paymentprofiles:simple', 'enrol_classicpay'));
+            $mform->addGroup($options, '', get_string('apply:paymentprofile', 'enrol_classicpay'), '<br/>', false);
+            $mform->addElement('static', '_settings', '', get_string('cppoapply:paymentprofiles:setting', 'enrol_classicpay'));
+            $mform->addGroup($options1, '', get_string('apply:paymentprofile', 'enrol_classicpay'), '<br/>', false);
+
+            $mform->setDefaults($defaults);
+
+            $mform->addElement('submit', 'button', get_string('button:cppo:update', 'enrol_classicpay'));
+        } catch (apiexception $aex) {
+            $mform->addElement('static', '_error', '', $aex->getMessage());
         }
-        $mform->addElement('static', '_simple', '', get_string('cppoapply:paymentprofiles:simple', 'enrol_classicpay'));
-        $mform->addGroup($options, '', get_string('apply:paymentprofile', 'enrol_classicpay'), '<br/>', false);
-        $mform->addElement('static', '_settings', '', get_string('cppoapply:paymentprofiles:setting', 'enrol_classicpay'));
-        $mform->addGroup($options1, '', get_string('apply:paymentprofile', 'enrol_classicpay'), '<br/>', false);
-
-        $mform->setDefaults($defaults);
-
-        $mform->addElement('submit', 'button', get_string('button:cppo:update', 'enrol_classicpay'));
     }
 
     /**

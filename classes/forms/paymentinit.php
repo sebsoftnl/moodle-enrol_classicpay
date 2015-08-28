@@ -148,8 +148,13 @@ class paymentinit extends \moodleform {
 
         // Check if coupon is 100%.
         $freeenrol = false;
-        if ($coupon !== null && intval($coupon->percentage) === 100) {
-            $freeenrol = true;
+        if ($coupon !== null) {
+            if ($coupon->type === 'percentage' && intval($coupon->value) === 100) {
+                $freeenrol = true;
+            }
+            if ($coupon->type === 'value' && ($coupon->value >= $instance->cost)) {
+                $freeenrol = true;
+            }
         }
 
         // Create record.
@@ -176,6 +181,7 @@ class paymentinit extends \moodleform {
             $record->cost = 0;
             $record->rawcost = 0;
             $record->percentage = '100';
+            $record->discount = $instance->cost;
             $record->timemodified = time();
         }
 
@@ -235,7 +241,14 @@ class paymentinit extends \moodleform {
         // Insert / add products (note: VAT is not used for now).
         $paynl->add_product($instance->courseid, $course->fullname, intval($record->cost * 100), 1, 'N');
         if ($coupon !== null) {
-            $discount = intval((($coupon->percentage / 100) * $record->cost) * -100);
+            if ($coupon->type === 'percentage') {
+                $discount = intval((($coupon->value / 100) * $record->cost) * -100);
+                $percentage = $coupon->value;
+            } else {
+                $percentage = intval( 100 * ($coupon->value / $record->cost));
+                $discount = $coupon->value * -100;
+            }
+
             $finalamount += $discount;
             $paynl->add_product($coupon->code, 'COUPON', $discount, 1, 'N');
             // Set coupon used.
@@ -245,7 +258,7 @@ class paymentinit extends \moodleform {
             $DB->insert_record('enrol_classicpay_cuse', (object) array('couponid' => $coupon->id, 'classicpayid' => $record->id));
             // Update values on our transaction record.
             $record->discount = $discount / -100;
-            $record->percentage = $coupon->percentage;
+            $record->percentage = $percentage;
         }
         $paynl->set_amount($finalamount);
 

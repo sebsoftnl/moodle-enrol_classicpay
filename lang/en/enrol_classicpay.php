@@ -261,6 +261,7 @@ $string['task:sync_cpplus'] = 'Synchronise whether or not we have a classicpay P
 $string['task:request_invoices'] = 'Synchronise invoice request queue';
 $string['classicpay:plus:status:valid'] = 'You have a classicpay plus account';
 $string['classicpay:plus:status:invalid'] = 'You do not have a classicpay plus account';
+$string['classicpay:plus:status:error'] = 'Error while checking classicpay plus account: {$a}';
 $string['classicpay:plus:description'] = '<div class="enrol-classicpay-info">When requesting a Classicpay Plus account, it effectively means you\'re applying to create / request invoices.<br/>
 This does bring a few extra costs, but it has the advantage both you and the enduser will automatically receive an invoice from our service when a course has been purchased.<br/>
 By enabling Classicpay Plus you automatically agree with us billing you 10 cent, on top of the transactions costs, per transaction.<br/>
@@ -277,8 +278,10 @@ Upon selecting these you will receive a confirmation email that should tell you 
 
 $string['apply:cpp:success'] = 'Successfully toggled Classic Pay plus';
 $string['apply:cpp:fail'] = 'Failure toggling Classic Pay plus';
+$string['apply:cpp:error'] = 'Error toggling Classic Pay plus: {$a}';
 $string['cppapply:header'] = 'Classicpay Plus account status';
 $string['button:cppo:update'] = 'Update payment methods';
+$string['err:getserviceprofiles'] = 'Error loading Payment options: {$a->error}';
 $string['err:setserviceprofiles'] = 'Error updating Payment options: {$a->error}';
 $string['setserviceprofiles:success'] = 'Successfully updated Payment options:<br/>{$a}';
 $string['warn:servicepage'] = '<div class="enrol-classicpay-warn">Every action you perform on this page will be performed on our classicpay service.<br/>
@@ -306,3 +309,12 @@ All liability claims will get rejected a priori.</p>
 <p>You as merchant (or website owner) will be bound to Pay.nl by means of a (lawful) contract for the purpose of obtaining your collected funds (i.e. the payments done).<br/>
 The payout will be provided by "Stichting Derdengelden Pay.nl", the legal company that\'s responsible for managing your funds.<br/>
 Sebsoft will send you an invoice for all transactions made and/or generated invoices (applicable for ClassicPay Plus).</p>';
+
+$string['coupontype'] = 'Type';
+$string['coupontype:percentage'] = 'Percentage';
+$string['coupontype:value'] = 'Value';
+$string['valuemissing'] = 'A value must be given';
+$string['err:value-negative'] = 'Discount can\'t be negative';
+$string['th:type'] = 'Type';
+$string['th:value'] = 'Value';
+$string['value'] = 'Value';
