@@ -85,7 +85,13 @@ class classicpay extends \table_sql {
         $this->displaytype = $type;
         $this->sortable(true, 'timemodified', 'DESC');
         $this->no_sorting('action');
-        $this->isclassicpayplus = (bool)get_config('enrol_classicpay' , 'isclassicpayplus');
+        try {
+            $api = new \enrol_classicpay\classicpay\api();
+            $result = $api->check_classicpayplus();
+            $this->isclassicpayplus = (bool)$result->result;
+        } catch (\Exception $ex) {
+            $this->isclassicpayplus = false;
+        }
     }
 
     /**
@@ -160,7 +166,7 @@ class classicpay extends \table_sql {
     protected function render_all($pagesize, $useinitialsbar = true) {
         global $DB;
         $this->define_columns(array('coursefullname', 'user', 'statusname', 'rawcost',
-            'cost', 'discount', 'percentage', 'gateway_transaction_id', 'timecreated', 'timemodified'));
+            'cost', 'discount', 'percentage', 'gateway_transaction_id', 'timecreated', 'timemodified', 'action'));
         $this->define_headers(array(
             get_string('th:courseid', 'enrol_classicpay'),
             get_string('th:user', 'enrol_classicpay'),
@@ -172,6 +178,7 @@ class classicpay extends \table_sql {
             get_string('th:txid', 'enrol_classicpay'),
             get_string('th:paymentcreated', 'enrol_classicpay'),
             get_string('th:paymentmodified', 'enrol_classicpay'),
+            get_string('th:action', 'enrol_classicpay'),
         ));
         $fields = 'cp.*, c.fullname as coursefullname, '.$DB->sql_fullname().' as user, NULL AS action';
         $where = array();
@@ -258,8 +265,8 @@ class classicpay extends \table_sql {
      */
     public function col_action($row) {
         $actions = array();
-        $actions[] = $this->get_action($row, 'details');
-        if ($this->isclassicpayplus && $this->displaytype == self::PAID) {
+        if ($this->isclassicpayplus && (int)$row->status === 100 &&
+                (int)$row->hasinvoice === 1 && $this->displaytype === self::ALL) {
             $actions[] = $this->get_action($row, 'invoice');
         }
         return implode(' ', $actions);

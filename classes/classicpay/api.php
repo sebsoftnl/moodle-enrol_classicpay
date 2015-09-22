@@ -263,9 +263,10 @@ class api {
      * @param \stdClass $user user instance
      * @param \stdClass $plugininstance enrol record instance
      * @param int $queueid optional queueid
+     * @param bool $forcererun force a rerun of the invoice?
      * @return boolean
      */
-    public function request_invoice($transaction, $user = null, $plugininstance = null, $queueid = null) {
+    public function request_invoice($transaction, $user = null, $plugininstance = null, $queueid = null, $forcererun = false) {
         global $DB;
         if ($user === null) {
             $user = $DB->get_record('user', array('id' => $transaction->userid), '*', MUST_EXIST);
@@ -301,6 +302,11 @@ class api {
             $pdata[] = array('description' => 'COUPON', 'price' => $discount, 'quantity' => 1);
         }
         $params['pdata'] = base64_encode(json_encode($pdata));
+
+        // Re-run?
+        if ($forcererun) {
+            $params['forcererun'] = 1;
+        }
 
         $result = $this->do_request('sendinvoice.php', $params);
         if (isset($result->status) && $result->status === 'true') {

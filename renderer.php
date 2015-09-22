@@ -220,36 +220,50 @@ class enrol_classicpay_renderer extends plugin_renderer_base {
      * Display transaction page for administration use
      */
     public function admin_page_transactions() {
+        global $DB;
         $this->page->set_title(get_string('title:transactions', 'enrol_classicpay'));
         $action = optional_param('action', 'list', PARAM_ALPHAEXT);
         $cid = optional_param('cid', 0, PARAM_INT);
         $pageurl = clone $this->page->url;
         $pageurl->param('action', $action);
 
-        $filter = optional_param('list', 'all', PARAM_ALPHA);
-        $table = new \enrol_classicpay\tables\classicpay($cid, $filter);
-        $table->baseurl = $pageurl;
-        $table->is_downloadable(true);
-        $table->show_download_buttons_at(array(TABLE_P_BOTTOM, TABLE_P_TOP));
-        $download = optional_param('download', '', PARAM_ALPHA);
-        if (!empty($download)) {
-            $table->is_downloading($download, 'transactions', 'transactions');
-            $table->render(25, true);
-            exit;
-        }
+        switch ($action) {
+            case 'invoice':
+                // Request invoice again.
+                $id = optional_param('id', 0, PARAM_INT);
+                $transaction = $DB->get_record('enrol_classicpay', array('id' => $id));
+                $api = new \enrol_classicpay\classicpay\api();
+                $api->request_invoice($transaction, null, null, null, true);
+                $pageurl->param('action', null);
+                redirect($pageurl, get_string('invoice:requested', 'enrol_classicpay'));
+                break;
+            case 'list':
+            default:
+                $filter = optional_param('list', 'all', PARAM_ALPHA);
+                $table = new \enrol_classicpay\tables\classicpay($cid, $filter);
+                $table->baseurl = $pageurl;
+                $table->is_downloadable(true);
+                $table->show_download_buttons_at(array(TABLE_P_BOTTOM, TABLE_P_TOP));
+                $download = optional_param('download', '', PARAM_ALPHA);
+                if (!empty($download)) {
+                    $table->is_downloading($download, 'transactions', 'transactions');
+                    $table->render(25, true);
+                    exit;
+                }
 
-        $out = '';
-        $out .= $this->header();
-        $out .= html_writer::start_div('enrol-classicpay-container');
-        $out .= html_writer::start_div('enrol-classicpay-tabs');
-        $out .= $this->admin_tabs('cptransactions');
-        $out .= html_writer::end_div();
-        ob_start();
-        $table->render(25);
-        $out .= ob_get_clean();
-        $out .= html_writer::end_div();
-        $out .= $this->footer();
-        return $out;
+                $out = '';
+                $out .= $this->header();
+                $out .= html_writer::start_div('enrol-classicpay-container');
+                $out .= html_writer::start_div('enrol-classicpay-tabs');
+                $out .= $this->admin_tabs('cptransactions');
+                $out .= html_writer::end_div();
+                ob_start();
+                $table->render(25);
+                $out .= ob_get_clean();
+                $out .= html_writer::end_div();
+                $out .= $this->footer();
+                return $out;
+        }
     }
 
     /**
