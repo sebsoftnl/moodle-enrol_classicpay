@@ -114,7 +114,7 @@ if ($ADMIN->fulltree) {
     if (!during_initial_install()) {
         $settingsstr = get_string('paynlsettings_desc', 'enrol_classicpay');
         if (!isset($config->paynlapitoken) || empty($config->paynlapitoken)) {
-            $url = new moodle_url('enrol/classicpay/spapply.php');
+            $url = new moodle_url('/enrol/classicpay/spapply.php');
             $settingsstr .= '<br/>' . get_string('paynlsettings_apply', 'enrol_classicpay', $url->out());
         }
         $settings->add(new admin_setting_heading('paynlsettings',
