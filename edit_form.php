@@ -74,6 +74,11 @@ class enrol_classicpay_edit_form extends moodleform {
         $mform->addElement('select', 'currency', get_string('currency', 'enrol_classicpay'), $classicpaycurrencies);
         $mform->setDefault('currency', $plugin->get_config('currency'));
 
+        $mform->addElement('advcheckbox', 'customint2', get_string('enablecoupon', 'enrol_classicpay'));
+        $mform->setType('customint2', PARAM_INT);
+        $mform->setDefault('customint2', intval($plugin->get_config('enablecoupon')));
+        $mform->addHelpButton('customint2', 'enablecoupon', 'enrol_classicpay');
+
         if ($instance->id) {
             $roles = get_default_enrol_roles($context, $instance->roleid);
         } else {

@@ -320,3 +320,9 @@ $string['th:type'] = 'Type';
 $string['th:value'] = 'Value';
 $string['value'] = 'Value';
 $string['invoice:requested'] = 'Your request to process the invoice has succesfully been processed';
+$string['apply:bic'] = 'BIC / Swift';
+$string['apply:bic_help'] = 'BIC or SWIFT code';
+
+$string['enablecoupon'] = 'Enable coupons?';
+$string['enablecoupon_help'] = 'Check this option to enable entering of coupons by default in the payment screen.
+You can enable or disable it on a per enrolment instance level.';

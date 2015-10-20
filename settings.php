@@ -87,6 +87,9 @@ if ($ADMIN->fulltree) {
     $settings->add(new admin_setting_configselect('enrol_classicpay/currency',
             get_string('currency', 'enrol_classicpay'), '', 'EUR', $classicpaycurrencies));
 
+    $settings->add(new admin_setting_configcheckbox('enrol_classicpay/enablecoupon', get_string('enablecoupon', 'enrol_classicpay'),
+            get_string('enablecoupon_help', 'enrol_classicpay'), 1));
+
     if (!during_initial_install()) {
         $options = get_default_enrol_roles(context_system::instance());
         $student = get_archetype_roles('student');

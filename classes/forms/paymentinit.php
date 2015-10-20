@@ -47,7 +47,9 @@ class paymentinit extends \moodleform {
      */
     public function definition() {
         global $CFG, $PAGE;
-        $PAGE->requires->js('/enrol/classicpay/js/coupon.js');
+        if ((bool)$this->_customdata->enablecoupon) {
+            $PAGE->requires->js('/enrol/classicpay/js/coupon.js');
+        }
         $mform = $this->_form;
         $mform->setDisableShortforms(true);
 
@@ -91,10 +93,12 @@ class paymentinit extends \moodleform {
 
         $mform->addElement('static', 'bankinfo', '', $html);
 
-        $mform->addElement('text', 'coupon', get_string('couponcode', 'enrol_classicpay'));
-        $mform->setType('coupon', PARAM_TEXT);
-        $mform->addElement('static', 'checkme', '',
-                '<a href="#" id="btncheckcoupon">' . get_string('checkcode', 'enrol_classicpay') . '</a>');
+        if ((bool)$this->_customdata->enablecoupon) {
+            $mform->addElement('text', 'coupon', get_string('couponcode', 'enrol_classicpay'));
+            $mform->setType('coupon', PARAM_TEXT);
+            $mform->addElement('static', 'checkme', '',
+                    '<a href="#" id="btncheckcoupon">' . get_string('checkcode', 'enrol_classicpay') . '</a>');
+        }
 
         $this->add_action_buttons(false, get_string('button:pay', 'enrol_classicpay'));
     }

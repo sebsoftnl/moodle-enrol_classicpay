@@ -131,7 +131,7 @@ class cpapply extends \moodleform {
         $mform->addHelpButton('street', 'apply:street', 'enrol_classicpay');
 
         $mform->addElement('text', 'houseNumber', get_string('apply:housenumber', 'enrol_classicpay'));
-        $mform->setType('houseNumber', PARAM_ALPHANUMEXT);
+        $mform->setType('houseNumber', PARAM_ALPHANUM);
         $mform->addRule('houseNumber', get_string('required'), 'required', null, 'client');
         $mform->addHelpButton('houseNumber', 'apply:housenumber', 'enrol_classicpay');
 
@@ -160,6 +160,11 @@ class cpapply extends \moodleform {
         $mform->setType('bankAccountNumber', PARAM_ALPHANUMEXT);
         $mform->addRule('bankAccountNumber', get_string('required'), 'required', null, 'client');
         $mform->addHelpButton('bankAccountNumber', 'apply:bankaccountnumber', 'enrol_classicpay');
+
+        $mform->addElement('text', 'BIC', get_string('apply:bic', 'enrol_classicpay'));
+        $mform->setType('BIC', PARAM_ALPHANUM);
+        $mform->addRule('BIC', get_string('required'), 'required', null, 'client');
+        $mform->addHelpButton('BIC', 'apply:bic', 'enrol_classicpay');
 
         $mform->addElement('text', 'bankName', get_string('apply:bankname', 'enrol_classicpay'));
         $mform->setType('bankName', PARAM_TEXT);

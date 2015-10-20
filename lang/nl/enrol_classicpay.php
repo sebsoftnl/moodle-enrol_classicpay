@@ -319,3 +319,9 @@ $string['err:value-negative'] = 'Korting kan niet negatief zijn';
 $string['th:type'] = 'Type';
 $string['th:value'] = 'Waarde';
 $string['invoice:requested'] = 'Je verzoek tot uitdraaien van een (nieuwe) factuur is verwerkt';
+$string['apply:bic'] = 'BIC / Swift';
+$string['apply:bic_help'] = 'BIC of SWIFT code';
+
+$string['enablecoupon'] = 'Gebruik van coupons inschakelen?';
+$string['enablecoupon_help'] = 'Vink dezeoptie aan als je standaard het invullen van coupon codes wilt inschakelen in het betaalscherm.
+Je kunt dit per enrolment instantie aan of uitschakelen.';

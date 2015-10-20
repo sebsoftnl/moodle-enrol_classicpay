@@ -46,5 +46,6 @@ if (!empty($config->paynlapitoken)) {
     exit;
 }
 
+$PAGE->requires->js('/enrol/classicpay/js/openiban.js');
 $form = new enrol_classicpay\classicpay\forms\cpapply($PAGE->url);
 $form->process_form(new moodle_url('/'));

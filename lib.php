@@ -121,30 +121,33 @@ class enrol_classicpay_plugin extends enrol_plugin {
             ));
             $instancesnode->add($this->get_instance_name($instance), $managelink, navigation_node::TYPE_SETTING);
 
-            // Now manipulate upwards, bail as quickly as possible if not appropriate.
-            $navigation = $instancesnode;
-            while ($navigation->parent !== null) {
-                $navigation = $navigation->parent;
+            // If we allow coupons for this instance, we'll add a link to direct configuration.
+            if ((bool)$instance->customint2) {
+                // Now manipulate upwards, bail as quickly as possible if not appropriate.
+                $navigation = $instancesnode;
+                while ($navigation->parent !== null) {
+                    $navigation = $navigation->parent;
+                }
+                if (!$courseadminnode = $navigation->get("courseadmin")) {
+                    return;
+                }
+                // Locate or add our own node if appropriate.
+                if (!$caclassicpaynode = $courseadminnode->get("caclassicpay")) {
+                    $nodeproperties = array(
+                        'text'          => get_string('pluginname', 'enrol_classicpay'),
+                        'shorttext'     => get_string('pluginname', 'enrol_classicpay'),
+                        'type'          => navigation_node::TYPE_CONTAINER,
+                        'key'           => 'caclassicpay'
+                    );
+                    $caclassicpaynode = new navigation_node($nodeproperties);
+                    $courseadminnode->add_node($caclassicpaynode, 'users');
+                }
+                // Add coupon manager node.
+                $caclassicpaynode->add(get_string('cp:coupons', 'enrol_classicpay'),
+                    new moodle_url('/enrol/classicpay/couponmanager.php', array('cid' => $instance->courseid)),
+                    navigation_node::TYPE_CONTAINER, get_string('cp:coupons', 'enrol_classicpay'),
+                    'cacoupons2', new pix_icon('coupons', '', 'enrol_classicpay'));
             }
-            if (!$courseadminnode = $navigation->get("courseadmin")) {
-                return;
-            }
-            // Locate or add our own node if appropriate.
-            if (!$caclassicpaynode = $courseadminnode->get("caclassicpay")) {
-                $nodeproperties = array(
-                    'text'          => get_string('pluginname', 'enrol_classicpay'),
-                    'shorttext'     => get_string('pluginname', 'enrol_classicpay'),
-                    'type'          => navigation_node::TYPE_CONTAINER,
-                    'key'           => 'caclassicpay'
-                );
-                $caclassicpaynode = new navigation_node($nodeproperties);
-                $courseadminnode->add_node($caclassicpaynode, 'users');
-            }
-            // Add coupon manager node.
-            $caclassicpaynode->add(get_string('cp:coupons', 'enrol_classicpay'),
-                new moodle_url('/enrol/classicpay/couponmanager.php', array('cid' => $instance->courseid)),
-                navigation_node::TYPE_CONTAINER, get_string('cp:coupons', 'enrol_classicpay'),
-                'cacoupons2', new pix_icon('coupons', '', 'enrol_classicpay'));
         }
     }
 
@@ -243,6 +246,7 @@ class enrol_classicpay_plugin extends enrol_plugin {
         $config->localisedcost = format_float($cost, 2, true);
         $config->coursename = $course->fullname;
         $config->locale = $USER->lang;
+        $config->enablecoupon = (int)$instance->customint2;
 
         global $PAGE;
         $form = new \enrol_classicpay\forms\paymentinit($PAGE->url, $config);

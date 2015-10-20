@@ -51,5 +51,11 @@ function xmldb_enrol_classicpay_upgrade($oldversion) {
         upgrade_plugin_savepoint(true, 2015060102, 'enrol', 'classicpay');
     }
 
+    if ($oldversion < 2015060104) {
+        // Set customint2 to 1, since we created a setting for enabling entering couponcodes.
+        $DB->execute("UPDATE {enrol} SET customint2 = ? WHERE enrol = ?", array(1, 'classicpay'));
+        upgrade_plugin_savepoint(true, 2015060104, 'enrol', 'classicpay');
+    }
+
     return true;
 }
