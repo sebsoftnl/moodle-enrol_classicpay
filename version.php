@@ -27,10 +27,9 @@
  * @license     http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  **/
 defined('MOODLE_INTERNAL') || die();
-$plugin->version     = 2015060104;
-$plugin->requires    = 2014051200;      // YYYYMMDDHH (This is the release version for Moodle 2.7).
-$plugin->cron        = 60;
+$plugin->version     = 2019022600;
+$plugin->requires    = 2018120300;      // YYYYMMDDHH (This is the release version for Moodle 3.6).
 $plugin->component   = 'enrol_classicpay';
 $plugin->maturity    = MATURITY_STABLE;
-$plugin->release     = '2.7.0 (build 2015060104)';
+$plugin->release     = '3.6.0 (build 2019022600)';
 $plugin->dependencies = array();
