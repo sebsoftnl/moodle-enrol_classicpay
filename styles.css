@@ -29,16 +29,16 @@ div.enrol-classicpay-logopromo a img {
 
 .enrol-classicpay-strike {
     text-decoration: line-through;
-    color: #880000;
+    color: #800;
 }
 
 #enrol-classicpay-coupondiscount {
-    color: #008800;
+    color: #080;
 }
 
 .enrol-classicpay-warn {
-    background-color: #ffdddd;
-    color: #880000;
+    background-color: #ffd;
+    color: #800;
     padding: 10px;
     border-radius: 3px;
     -moz-border-radius: 3px;
@@ -46,8 +46,8 @@ div.enrol-classicpay-logopromo a img {
 }
 
 .enrol-classicpay-info {
-    background-color: #ddddff;
-    color: #000088;
+    background-color: #ddf;
+    color: #008;
     padding: 10px;
     border-radius: 3px;
     -moz-border-radius: 3px;
@@ -74,7 +74,9 @@ div.enrol-classicpay-logopromo a img {
 }
 
 /* creditcard */
-.pp_s25.pp11, .pp_s25.pp706, .pp_s25.pp709,
+.pp_s25.pp11,
+.pp_s25.pp706,
+.pp_s25.pp709,
 .pp_s25.pp902 {
     background-position: 0 -75px;
     width: 25px;
@@ -145,9 +147,23 @@ div.enrol-classicpay-logopromo a img {
 }
 
 /* direct e-banking */
-.pp_s25.pp556, .pp_s25.pp559, .pp_s25.pp562, .pp_s25.pp565, .pp_s25.pp568, .pp_s25.pp571,
-.pp_s25.pp574, .pp_s25.pp577, .pp_s25.pp580, .pp_s25.pp583, .pp_s25.pp586, .pp_s25.pp589,
-.pp_s25.pp592, .pp_s25.pp595, .pp_s25.pp598, .pp_s25.pp601, .pp_s25.pp604,
+.pp_s25.pp556,
+.pp_s25.pp559,
+.pp_s25.pp562,
+.pp_s25.pp565,
+.pp_s25.pp568,
+.pp_s25.pp571,
+.pp_s25.pp574,
+.pp_s25.pp577,
+.pp_s25.pp580,
+.pp_s25.pp583,
+.pp_s25.pp586,
+.pp_s25.pp589,
+.pp_s25.pp592,
+.pp_s25.pp595,
+.pp_s25.pp598,
+.pp_s25.pp601,
+.pp_s25.pp604,
 .pp_s25.pp607 {
     background-position: 0 -825px;
     width: 25px;
