@@ -25,6 +25,8 @@
 
 namespace enrol_classicpay\task;
 
+defined('MOODLE_INTERNAL') || die();
+
 /**
  * Description of request_invoices
  *
@@ -34,8 +36,6 @@ namespace enrol_classicpay\task;
  * @author      R.J. van Dongen <rogier@sebsoft.nl>
  * @license     http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-
-defined('MOODLE_INTERNAL') || die();
 
 class request_invoices extends \core\task\scheduled_task {
 
