@@ -73,7 +73,7 @@ class process_orders extends \core\task\scheduled_task {
                     usleep(50000);
                 }
             } catch (\Exception $e) {
-                mtrace('Unable to process pending errors.');
+                mtrace('Unable to process pending orders.');
             }
         }
     }
