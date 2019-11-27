@@ -29,6 +29,8 @@
 
 namespace enrol_classicpay\pay\api;
 
+defined('MOODLE_INTERNAL') || die();
+
 /**
  * enrol_classicpay\pay\api\exception
  *

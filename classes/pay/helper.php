@@ -29,6 +29,8 @@
 
 namespace enrol_classicpay\pay;
 
+defined('MOODLE_INTERNAL') || die();
+
 /**
  * enrol_classicpay\pay\helper
  *
