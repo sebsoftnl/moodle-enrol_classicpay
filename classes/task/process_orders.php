@@ -34,6 +34,9 @@ namespace enrol_classicpay\task;
  * @author      R.J. van Dongen <rogier@sebsoft.nl>
  * @license     http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
+
+defined('MOODLE_INTERNAL') || die();
+
 class process_orders extends \core\task\scheduled_task {
 
     /**
@@ -70,7 +73,7 @@ class process_orders extends \core\task\scheduled_task {
                     usleep(50000);
                 }
             } catch (\Exception $e) {
-                // Don't do a damn thing.
+                mtrace('Unable to process pending errors.');
             }
         }
     }

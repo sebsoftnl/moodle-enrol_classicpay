@@ -34,6 +34,9 @@ namespace enrol_classicpay\task;
  * @author      R.J. van Dongen <rogier@sebsoft.nl>
  * @license     http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
+
+defined('MOODLE_INTERNAL') || die();
+
 class sync_cpplus extends \core\task\scheduled_task {
 
     /**

@@ -31,6 +31,8 @@ namespace enrol_classicpay\classicpay\forms;
 use enrol_classicpay\classicpay\api;
 use enrol_classicpay\classicpay\exception as apiexception;
 
+defined('MOODLE_INTERNAL') || die();
+
 require_once($CFG->libdir . '/formslib.php');
 
 /**

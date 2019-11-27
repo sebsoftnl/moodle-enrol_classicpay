@@ -29,6 +29,8 @@
 
 namespace enrol_classicpay\classicpay\forms;
 
+defined('MOODLE_INTERNAL') || die();
+
 require_once($CFG->libdir . '/formslib.php');
 
 /**
