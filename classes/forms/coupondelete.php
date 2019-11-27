@@ -29,6 +29,8 @@
 
 namespace enrol_classicpay\forms;
 
+defined('MOODLE_INTERNAL') || die();
+
 require_once($CFG->libdir . '/formslib.php');
 
 /**
@@ -40,8 +42,6 @@ require_once($CFG->libdir . '/formslib.php');
  * @author      R.J. van Dongen <rogier@sebsoft.nl>
  * @license     http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-
-defined('MOODLE_INTERNAL') || die();
 
 class coupondelete extends \moodleform {
 
