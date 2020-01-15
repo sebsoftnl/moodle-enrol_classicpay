@@ -29,12 +29,14 @@ namespace enrol_classicpay\privacy;
 defined('MOODLE_INTERNAL') || die();
 
 use core_privacy\local\metadata\collection;
+use core_privacy\local\request\approved_contextlist;
+use core_privacy\local\request\contextlist;
 use core_privacy\local\request\writer;
 
 /**
  * Class provider
  *
- * @package enrol_classicpay\privacy
+ * @package     enrol_classicpay\privacy
  *
  * @copyright   Sebsoft.nl
  * @author      Nick Stolk <nick@sebsoft.nl>
@@ -43,6 +45,7 @@ use core_privacy\local\request\writer;
 class provider {
     /**
      * Provides a collection of stored metadata about a user
+     *
      * @param collection $collection
      * @return collection
      */
@@ -68,5 +71,71 @@ class provider {
                 ]
         );
         return $collection;
+    }
+
+    /**
+     * Get the lists of contexts that contain user information for the specified user.
+     *
+     * @param int $userid
+     * @return contextlist
+     */
+    public static function get_contexts_for_userid(int $userid): contextlist {
+        $contextlist = new contextlist();
+
+        $contextlist->add_system_context();
+
+        return $contextlist;
+    }
+
+    /**
+     * Export all user data for the specified user.
+     *
+     * @param approved_contextlist $contextlist
+     * @throws \dml_exception
+     */
+    public static function export_user_data(approved_contextlist $contextlist) {
+        global $DB;
+        if (empty($contextlist->count())) {
+            return;
+        }
+
+        $user = $contextlist->get_user();
+
+        foreach ($contextlist->get_contexts() as $context) {
+            if ($context->contextlevel != CONTEXT_SYSTEM) {
+                continue;
+            }
+
+            $data = [];
+            $transactions = $DB->get_fieldset_select('enrol_classicpay', 'id', 'userid = ?', [$user->id]);
+            foreach ($transactions as $transaction) {
+                $data[$context->id][] = (object) [
+                        'userid' => $transaction->userid,
+                        'courseid' => $transaction->courseid,
+                        'instanceid' => $transaction->instanceid,
+                        'orderid' => $transaction->orderid,
+                        'status' => $transaction->status,
+                        'statusname' => $transaction->statusname,
+                        'gateway_transaction_id' => $transaction->gateway_transaction_id,
+                        'gateway' => $transaction->gateway,
+                        'rawcost' => $transaction->rawcost,
+                        'cost' => $transaction->cost,
+                        'percentage' => $transaction->percentage,
+                        'discount' => $transaction->discount,
+                        'hasinvoice' => $transaction->hasinvoice,
+                        'timecreated' => $transaction->timecreated,
+                        'timemodified' => $transaction->timemodified
+                ];
+            }
+
+            array_walk($data, function($transactiondata, $contextid) {
+               $context = \context::instance_by_id($contextid);
+               writer::with_context($context)->export_related_data(
+                       ['enrol_classicpay'],
+                       'transactions',
+                       (object) ['transactions' => $transactiondata]
+               );
+            });
+        }
     }
 }
