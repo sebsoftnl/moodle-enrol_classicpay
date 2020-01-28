@@ -28,9 +28,11 @@ namespace enrol_classicpay\privacy;
 
 defined('MOODLE_INTERNAL') || die();
 
+use context_course;
 use core_privacy\local\metadata\collection;
 use core_privacy\local\request\approved_contextlist;
 use core_privacy\local\request\contextlist;
+use core_privacy\local\request\transform;
 use core_privacy\local\request\writer;
 
 /**
@@ -106,47 +108,89 @@ class provider {
      */
     public static function export_user_data(approved_contextlist $contextlist) {
         global $DB;
+
         if (empty($contextlist->count())) {
             return;
         }
 
-        $user = $contextlist->get_user();
+        $userid = $contextlist->get_user()->id;
+        $transactiondata = [];
+        $alluserdata = $DB->get_records_sql(
+                "SELECT * 
+                    FROM {enrol_classicpay} cp
+                    WHERE cp.userid = :userid",
+                array('userid' => $userid)
+        );
 
-        foreach ($contextlist->get_contexts() as $context) {
-            if ($context->contextlevel != CONTEXT_SYSTEM) {
-                continue;
-            }
-
-            $data = [];
-            $transactions = $DB->get_fieldset_select('enrol_classicpay', 'id', 'userid = ?', [$user->id]);
-            foreach ($transactions as $transaction) {
-                $data[$context->id][] = (object) [
-                        'userid' => $transaction->userid,
-                        'courseid' => $transaction->courseid,
-                        'instanceid' => $transaction->instanceid,
-                        'orderid' => $transaction->orderid,
-                        'status' => $transaction->status,
-                        'statusname' => $transaction->statusname,
-                        'gateway_transaction_id' => $transaction->gateway_transaction_id,
-                        'gateway' => $transaction->gateway,
-                        'rawcost' => $transaction->rawcost,
-                        'cost' => $transaction->cost,
-                        'percentage' => $transaction->percentage,
-                        'discount' => $transaction->discount,
-                        'hasinvoice' => $transaction->hasinvoice,
-                        'timecreated' => $transaction->timecreated,
-                        'timemodified' => $transaction->timemodified
-                ];
-            }
-
-            array_walk($data, function($transactiondata, $contextid) {
-                $context = \context::instance_by_id($contextid);
-                writer::with_context($context)->export_related_data(
-                        ['enrol_classicpay'],
-                        'transactions',
-                        (object) ['transactions' => $transactiondata]
-                );
-            });
+        foreach ($alluserdata as $userdata) {
+            $transactiondata[] = (object)[
+                'userid' => $userdata->userid,
+                'orderid' => $userdata->orderid,
+                'status' => $userdata->status,
+                'statusname' => $userdata->statusname,
+                'gateway' => $userdata->gateway,
+                'rawcost' => $userdata->rawcost,
+                'cost' => $userdata->cost,
+                'percentage' => $userdata->percentage,
+                'discount' => $userdata->discount,
+                'hasinvoice' => $userdata->hasinvoice,
+                'timecreated' => transform::datetime($userdata->timecreated),
+                'timemodified' => transform::datetime($userdata->timemodified)
+            ];
         }
+
+        $courseids = [];
+        foreach ($contextlist->get_contexts() as $context) {
+            if ($context instanceof context_course) {
+                array_push($courseids, $context->instanceid);
+            }
+        }
+
+        if (empty($courseids)) {
+            return;
+        }
+
+        //if (empty($contextlist->count())) {
+        //    return;
+        //}
+        //
+        //$user = $contextlist->get_user();
+        //
+        //foreach ($contextlist->get_contexts() as $context) {
+        //    if ($context->contextlevel != CONTEXT_SYSTEM) {
+        //        continue;
+        //    }
+        //
+        //    $data = [];
+        //    $transactions = $DB->get_fieldset_select('enrol_classicpay', 'id', 'userid = ?', [$user->id]);
+        //    foreach ($transactions as $transaction) {
+        //        $data[$context->id][] = (object) [
+        //                'userid' => $transaction->userid,
+        //                'courseid' => $transaction->courseid,
+        //                'instanceid' => $transaction->instanceid,
+        //                'orderid' => $transaction->orderid,
+        //                'status' => $transaction->status,
+        //                'statusname' => $transaction->statusname,
+        //                'gateway_transaction_id' => $transaction->gateway_transaction_id,
+        //                'gateway' => $transaction->gateway,
+        //                'rawcost' => $transaction->rawcost,
+        //                'cost' => $transaction->cost,
+        //                'percentage' => $transaction->percentage,
+        //                'discount' => $transaction->discount,
+        //                'hasinvoice' => $transaction->hasinvoice,
+        //                'timecreated' => $transaction->timecreated,
+        //                'timemodified' => $transaction->timemodified
+        //        ];
+        //    }
+        //
+        //    array_walk($data, function($transactiondata, $contextid) {
+        //        $context = \context::instance_by_id($contextid);
+        //        writer::with_context($context)->export_related_data(
+        //                ['enrol_classicpay'],
+        //                'transactions',
+        //                (object) ['transactions' => $transactiondata]
+        //        );
+        //    });
+        //}
     }
 }

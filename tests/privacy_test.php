@@ -27,6 +27,7 @@
 defined('MOODLE_INTERNAL') || die();
 
 require_once(__DIR__ . '/../classes/privacy/provider.php');
+require_once(__DIR__. '/helper_functions.php');
 
 use core_privacy\local\metadata\collection;
 use core_privacy\tests\provider_testcase;
@@ -82,28 +83,7 @@ class enrol_classicpay_privacy_provider_testcase extends provider_testcase {
 
         $coursecontext = context_course::instance($course->id);
 
-        /*
-        Simulate a free enrol, through ClassicPay. Currently the method that does the enrolment and adds the necessary data
-        to the enrol_classicpay table is too interwoven with the PAY API. Since we're testing for contexts, and not PAY's API
-        we manually create and insert a record here.
-        */
-        $record = new stdClass();
-        $record->userid = $user->id;
-        $record->courseid = $course->id;
-        $record->instanceid = $coursecontext->instanceid;
-        $record->orderid = uniqid(time());
-        $record->status = '100';
-        $record->statusname = 'PAID';
-        $record->gateway_transaction_id = rand(1, 20);
-        $record->gateway = 'Moodle';
-        $record->rawcost = 0;
-        $record->cost = 0;
-        $record->percentage = '100';
-        $record->discount = 5;
-        $record->hasinvoice = 0;
-        $record->timecreated = time();
-        $record->timemodified = time();
-
+        $record = helper_functions::insert_classicpay_record($user->id, $course->id, $coursecontext);
         $record->id = $DB->insert_record('enrol_classicpay', $record);
 
         // Get the context id from the context table, join on course.id, then join on enrol_classicpay.course_id and where clause for user_id
@@ -111,5 +91,13 @@ class enrol_classicpay_privacy_provider_testcase extends provider_testcase {
         $contextlist = provider::get_contexts_for_userid($user->id);
         $this->assertCount(1, $contextlist);
         $this->assertEquals($coursecontext->id, $contextlist->get_contextids()[0]);
+    }
+
+    public function export_user_data() {
+        global $DB;
+
+        $user = $this->getDataGenerator()->create_user();
+        $course1 = $this->getDataGenerator()->create_course();
+        $course2 = $this->getDataGenerator()->create_course();
     }
 }
