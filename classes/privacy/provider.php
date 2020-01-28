@@ -82,7 +82,18 @@ class provider {
     public static function get_contexts_for_userid(int $userid): contextlist {
         $contextlist = new contextlist();
 
-        $contextlist->add_system_context();
+        $sql = "SELECT context.id
+                FROM {context} context
+                JOIN {course} course ON course.id = context.instanceid AND context.contextlevel = :courselevel
+                JOIN {enrol_classicpay} enrol_classicpay ON enrol_classicpay.courseid = course.id
+                WHERE enrol_classicpay.userid = :userid";
+
+        $parameters = [
+                'userid' => $userid,
+                'courselevel' => CONTEXT_COURSE
+        ];
+
+        $contextlist->add_from_sql($sql, $parameters);
 
         return $contextlist;
     }
@@ -129,12 +140,12 @@ class provider {
             }
 
             array_walk($data, function($transactiondata, $contextid) {
-               $context = \context::instance_by_id($contextid);
-               writer::with_context($context)->export_related_data(
-                       ['enrol_classicpay'],
-                       'transactions',
-                       (object) ['transactions' => $transactiondata]
-               );
+                $context = \context::instance_by_id($contextid);
+                writer::with_context($context)->export_related_data(
+                        ['enrol_classicpay'],
+                        'transactions',
+                        (object) ['transactions' => $transactiondata]
+                );
             });
         }
     }
