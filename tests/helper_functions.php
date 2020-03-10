@@ -37,7 +37,7 @@ class helper_functions {
      * @param $coursecontext
      * @return stdClass
      */
-    public static function insert_classicpay_record($userid, $courseid, $coursecontext) {
+    public static function generate_classicpay_record($userid, $courseid, $coursecontext) {
 
         $record = new stdClass();
         $record->userid = $userid;

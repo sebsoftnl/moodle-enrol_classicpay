@@ -327,6 +327,7 @@ $string['enablecoupon'] = 'Enable coupons?';
 $string['enablecoupon_help'] = 'Check this option to enable entering of coupons by default in the payment screen.
 You can enable or disable it on a per enrolment instance level.';
 
+$string['privacy:metadata:enrol_classicpay'] = 'Transaction data for the given user';
 $string['privacy:metadata:enrol_classicpay:userid'] = 'The primary database key of the Moodle user.';
 $string['privacy:metadata:enrol_classicpay:courseid'] = 'The primary database key of the course(s) the user is enrolled in.';
 $string['privacy:metadata:enrol_classicpay:instanceid'] =  'The primary database key of the enrol instance.';

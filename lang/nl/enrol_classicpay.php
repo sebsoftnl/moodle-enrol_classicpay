@@ -326,6 +326,7 @@ $string['enablecoupon'] = 'Gebruik van coupons inschakelen?';
 $string['enablecoupon_help'] = 'Vink dezeoptie aan als je standaard het invullen van coupon codes wilt inschakelen in het betaalscherm.
 Je kunt dit per enrolment instantie aan of uitschakelen.';
 
+$string['privacy:metadata:enrol_classicpay'] = 'Transactiegegevens voor deze gebruiker';
 $string['privacy:metadata:enrol_classicpay:userid'] = 'De primaire database sleutel van de Moodle gebruiker.';
 $string['privacy:metadata:enrol_classicpay:courseid'] = 'De primaire database sleutel voor de cursus(sen) waar een gebruiker voor ingeschreven is.';
 $string['privacy:metadata:enrol_classicpay:instanceid'] =  'De primaire database sleutel voor de inschrijving.';
