@@ -26,7 +26,8 @@
  * @author      R.J. van Dongen <rogier@sebsoft.nl>
  * @license     http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-
+// No login check is expected since this is a signup script.
+// @codingStandardsIgnoreLine
 require("../../config.php");
 require_once("lib.php");
 require_once($CFG->libdir . '/enrollib.php');

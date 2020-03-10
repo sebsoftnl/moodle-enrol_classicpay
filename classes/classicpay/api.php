@@ -30,6 +30,8 @@
 namespace enrol_classicpay\classicpay;
 use enrol_classicpay\classicpay\exception;
 
+defined('MOODLE_INTERNAL') || die();
+
 /**
  * enrol_classicpay\classicpay\api
  *
@@ -106,7 +108,7 @@ class api {
         }
 
         curl_close($ch);
-        // ...
+
         $returndata = json_decode($result);
         return $returndata;
     }

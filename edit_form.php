@@ -29,6 +29,7 @@
 defined('MOODLE_INTERNAL') || die();
 
 require_once($CFG->libdir . '/formslib.php');
+require_once($CFG->dirroot.'/cohort/lib.php');
 
 /**
  * enrol_classicpay_edit_form
@@ -45,6 +46,7 @@ class enrol_classicpay_edit_form extends moodleform {
      * form definition
      */
     public function definition() {
+        global $DB;
         $mform = $this->_form;
 
         list($instance, $plugin, $context) = $this->_customdata;
@@ -103,6 +105,33 @@ class enrol_classicpay_edit_form extends moodleform {
                 get_string('enrolenddate', 'enrol_classicpay'), array('optional' => true));
         $mform->setDefault('enrolenddate', 0);
         $mform->addHelpButton('enrolenddate', 'enrolenddate', 'enrol_classicpay');
+
+        $cohorts = array(0 => get_string('no'));
+        $allcohorts = cohort_get_available_cohorts($context, 0, 0, 0);
+        if ($instance->customint5 && !isset($allcohorts[$instance->customint5]) &&
+                ($c = $DB->get_record('cohort', array('id' => $instance->customint5),
+                        'id, name, idnumber, contextid, visible', IGNORE_MISSING))) {
+            // Current cohort was not found because current user can not see it. Still keep it.
+            $allcohorts[$instance->customint5] = $c;
+        }
+        foreach ($allcohorts as $c) {
+            $cohorts[$c->id] = format_string($c->name, true, array('context' => context::instance_by_id($c->contextid)));
+            if ($c->idnumber) {
+                $cohorts[$c->id] .= ' ['.s($c->idnumber).']';
+            }
+        }
+        if ($instance->customint5 && !isset($allcohorts[$instance->customint5])) {
+            // Somebody deleted a cohort, better keep the wrong value so that random ppl can not enrol.
+            $cohorts[$instance->customint5] = get_string('unknowncohort', 'cohort', $instance->customint5);
+        }
+        if (count($cohorts) > 1) {
+            $mform->addElement('select', 'customint5', get_string('cohortonly', 'enrol_self'), $cohorts);
+            $mform->addHelpButton('customint5', 'cohortonly', 'enrol_self');
+        } else {
+            $mform->addElement('hidden', 'customint5');
+            $mform->setType('customint5', PARAM_INT);
+            $mform->setConstant('customint5', 0);
+        }
 
         $mform->addElement('hidden', 'id');
         $mform->setType('id', PARAM_INT);

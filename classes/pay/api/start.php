@@ -28,11 +28,10 @@
  */
 
 namespace enrol_classicpay\pay\api;
-
-defined('MOODLE_INTERNAL') || die();
-
 use enrol_classicpay\pay\api;
 use enrol_classicpay\pay\exception;
+
+defined('MOODLE_INTERNAL') || die();
 
 /**
  * enrol_classicpay\pay\api\start

@@ -42,7 +42,6 @@ require_once($CFG->libdir . '/formslib.php');
  * @author      R.J. van Dongen <rogier@sebsoft.nl>
  * @license     http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-
 class paymentinit extends \moodleform {
 
     /**
@@ -240,6 +239,7 @@ class paymentinit extends \moodleform {
         $paynl->set_apitoken(get_config('enrol_classicpay', 'paynlapitoken'));
         $paynl->set_serviceid(get_config('enrol_classicpay', 'paynlserviceid'));
         $paynl->set_description($desc);
+        $paynl->set_info('Classicpayv1');
         $paynl->set_extra1($record->userid . '|' . $record->instanceid . '|' . $record->courseid . '|' . $record->orderid);
         $paynl->set_exchangeurl($exchangeurl->out(false));
         $paynl->set_finishurl($returnurl->out(false));

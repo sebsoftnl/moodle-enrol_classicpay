@@ -522,7 +522,7 @@ class cpapply extends \moodleform {
         }
 
         curl_close($ch);
-        // ...
+
         $returndata = json_decode($result);
         return $returndata;
     }

@@ -36,7 +36,6 @@ defined('MOODLE_INTERNAL') || die();
  * @author      R.J. van Dongen <rogier@sebsoft.nl>
  * @license     http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-
 class process_orders extends \core\task\scheduled_task {
 
     /**
@@ -73,7 +72,8 @@ class process_orders extends \core\task\scheduled_task {
                     usleep(50000);
                 }
             } catch (\Exception $e) {
-                mtrace('Unable to process pending orders.');
+                // Don't do a damn thing.
+                mtrace("Error during execution: " . $e->getMessage());
             }
         }
     }

@@ -25,6 +25,8 @@
 
 namespace enrol_classicpay;
 
+defined('MOODLE_INTERNAL') or die;
+
 use enrol_classicpay\pay\api\info;
 
 /**
@@ -69,7 +71,6 @@ class transaction {
      */
     protected $plugin;
     /**
-     *
      * @var \stdClass plugin instance record
      */
     protected $plugininstance;
@@ -127,8 +128,6 @@ class transaction {
      * @throws \Exception
      */
     private function load_validate_external() {
-        global $DB;
-
         // Generate data we complement error messages with.
         $data = new \stdClass();
         $custom = explode('|', $this->transactioninfo['statsDetails']['extra1']);
@@ -262,7 +261,6 @@ class transaction {
         // Call invoice services, IF this wasn't a free enrolment.
         if (!empty($this->transactionrecord->gateway_transaction_id) && (int)$this->transactionrecord->cost > 0) {
             $queue = array('classicpayid' => $this->transactionrecord->id);
-            /* @var $DB \moodle_database */
             if (!$DB->record_exists('enrol_classicpay_ivq', $queue)) {
                 $DB->insert_record('enrol_classicpay_ivq', (object)$queue);
             }
@@ -288,17 +286,43 @@ class transaction {
             $a->coursename = format_string($this->course->fullname, true, array('context' => $this->coursecontext));
             $a->profileurl = "$CFG->wwwroot/user/view.php?id=".$this->user->id;
 
-            $eventdata = new \stdClass();
-            $eventdata->modulename = 'moodle';
-            $eventdata->component = 'enrol_classicpay';
-            $eventdata->name = 'classicpay_enrolment';
-            $eventdata->userfrom = empty($teacher) ? get_admin() : $teacher;
-            $eventdata->userto = $this->user;
-            $eventdata->subject = get_string("enrolmentnew", 'enrol', $shortname);
-            $eventdata->fullmessage = get_string('welcometocoursetext', '', $a);
-            $eventdata->fullmessageformat = FORMAT_PLAIN;
-            $eventdata->fullmessagehtml = '';
-            $eventdata->smallmessage = '';
+            if (class_exists('\\core\\message\\message')) {
+                $admin = get_admin();
+                $eventdata = new \core\message\message();
+                $eventdata->modulename = 'moodle';
+                $eventdata->component = 'enrol_classicpay';
+                $eventdata->name = 'classicpay_enrolment';
+                $eventdata->userfrom = empty($teacher) ? get_admin() : $teacher;
+                $eventdata->userto = $this->user;
+                $eventdata->subject = get_string("enrolmentnew", 'enrol', $shortname);
+                $eventdata->fullmessage = get_string('welcometocoursetext', '', $a);
+                $eventdata->fullmessageformat = FORMAT_PLAIN;
+                $eventdata->fullmessagehtml = '';
+                $eventdata->smallmessage = '';
+                $eventdata->notification = 1;
+                $eventdata->contexturl = null;
+                $eventdata->contexturlname = null;
+                $eventdata->replyto = trim($admin->email);
+                $eventdata->attachment = '';
+                $eventdata->attachname = '';
+                // Below is needed on Moodle 3.2.
+                if (isset($CFG->branch) && $CFG->branch >= 32) {
+                    $eventdata->courseid = 0;
+                    $eventdata->timecreated = time();
+                }
+            } else {
+                $eventdata = new \stdClass();
+                $eventdata->modulename = 'moodle';
+                $eventdata->component = 'enrol_classicpay';
+                $eventdata->name = 'classicpay_enrolment';
+                $eventdata->userfrom = empty($teacher) ? get_admin() : $teacher;
+                $eventdata->userto = $this->user;
+                $eventdata->subject = get_string("enrolmentnew", 'enrol', $shortname);
+                $eventdata->fullmessage = get_string('welcometocoursetext', '', $a);
+                $eventdata->fullmessageformat = FORMAT_PLAIN;
+                $eventdata->fullmessagehtml = '';
+                $eventdata->smallmessage = '';
+            }
             message_send($eventdata);
         }
 
@@ -306,17 +330,43 @@ class transaction {
             $a->course = format_string($this->course->fullname, true, array('context' => $this->coursecontext));
             $a->user = fullname($this->user);
 
-            $eventdata = new \stdClass();
-            $eventdata->modulename = 'moodle';
-            $eventdata->component = 'enrol_classicpay';
-            $eventdata->name = 'classicpay_enrolment';
-            $eventdata->userfrom = $this->user;
-            $eventdata->userto = $teacher;
-            $eventdata->subject = get_string("enrolmentnew", 'enrol', $shortname);
-            $eventdata->fullmessage = get_string('enrolmentnewuser', 'enrol', $a);
-            $eventdata->fullmessageformat = FORMAT_PLAIN;
-            $eventdata->fullmessagehtml = '';
-            $eventdata->smallmessage = '';
+            if (class_exists('\\core\\message\\message')) {
+                $admin = get_admin();
+                $eventdata = new \core\message\message();
+                $eventdata->modulename = 'moodle';
+                $eventdata->component = 'enrol_classicpay';
+                $eventdata->name = 'classicpay_enrolment';
+                $eventdata->userfrom = $this->user;
+                $eventdata->userto = $teacher;
+                $eventdata->subject = get_string("enrolmentnew", 'enrol', $shortname);
+                $eventdata->fullmessage = get_string('enrolmentnewuser', 'enrol', $a);
+                $eventdata->fullmessageformat = FORMAT_PLAIN;
+                $eventdata->fullmessagehtml = '';
+                $eventdata->smallmessage = '';
+                $eventdata->notification = 1;
+                $eventdata->contexturl = null;
+                $eventdata->contexturlname = null;
+                $eventdata->replyto = trim($admin->email);
+                $eventdata->attachment = '';
+                $eventdata->attachname = '';
+                // Below is needed on Moodle 3.2.
+                if (isset($CFG->branch) && $CFG->branch >= 32) {
+                    $eventdata->courseid = 0;
+                    $eventdata->timecreated = time();
+                }
+            } else {
+                $eventdata = new \stdClass();
+                $eventdata->modulename = 'moodle';
+                $eventdata->component = 'enrol_classicpay';
+                $eventdata->name = 'classicpay_enrolment';
+                $eventdata->userfrom = $this->user;
+                $eventdata->userto = $teacher;
+                $eventdata->subject = get_string("enrolmentnew", 'enrol', $shortname);
+                $eventdata->fullmessage = get_string('enrolmentnewuser', 'enrol', $a);
+                $eventdata->fullmessageformat = FORMAT_PLAIN;
+                $eventdata->fullmessagehtml = '';
+                $eventdata->smallmessage = '';
+            }
             message_send($eventdata);
         }
 
@@ -325,17 +375,42 @@ class transaction {
             $a->user = fullname($this->user);
             $admins = get_admins();
             foreach ($admins as $admin) {
-                $eventdata = new \stdClass();
-                $eventdata->modulename = 'moodle';
-                $eventdata->component = 'enrol_classicpay';
-                $eventdata->name = 'classicpay_enrolment';
-                $eventdata->userfrom = $this->user;
-                $eventdata->userto = $admin;
-                $eventdata->subject = get_string("enrolmentnew", 'enrol', $shortname);
-                $eventdata->fullmessage = get_string('enrolmentnewuser', 'enrol', $a);
-                $eventdata->fullmessageformat = FORMAT_PLAIN;
-                $eventdata->fullmessagehtml = '';
-                $eventdata->smallmessage = '';
+                if (class_exists('\\core\\message\\message')) {
+                    $eventdata = new \core\message\message();
+                    $eventdata->modulename = 'moodle';
+                    $eventdata->component = 'enrol_classicpay';
+                    $eventdata->name = 'classicpay_enrolment';
+                    $eventdata->userfrom = $this->user;
+                    $eventdata->userto = $admin;
+                    $eventdata->subject = get_string("enrolmentnew", 'enrol', $shortname);
+                    $eventdata->fullmessage = get_string('enrolmentnewuser', 'enrol', $a);
+                    $eventdata->fullmessageformat = FORMAT_PLAIN;
+                    $eventdata->fullmessagehtml = '';
+                    $eventdata->smallmessage = '';
+                    $eventdata->notification = 1;
+                    $eventdata->contexturl = null;
+                    $eventdata->contexturlname = null;
+                    $eventdata->replyto = trim($admin->email);
+                    $eventdata->attachment = '';
+                    $eventdata->attachname = '';
+                    // Below is needed on Moodle 3.2.
+                    if (isset($CFG->branch) && $CFG->branch >= 32) {
+                        $eventdata->courseid = 0;
+                        $eventdata->timecreated = time();
+                    }
+                } else {
+                    $eventdata = new \stdClass();
+                    $eventdata->modulename = 'moodle';
+                    $eventdata->component = 'enrol_classicpay';
+                    $eventdata->name = 'classicpay_enrolment';
+                    $eventdata->userfrom = $this->user;
+                    $eventdata->userto = $admin;
+                    $eventdata->subject = get_string("enrolmentnew", 'enrol', $shortname);
+                    $eventdata->fullmessage = get_string('enrolmentnewuser', 'enrol', $a);
+                    $eventdata->fullmessageformat = FORMAT_PLAIN;
+                    $eventdata->fullmessagehtml = '';
+                    $eventdata->smallmessage = '';
+                }
                 message_send($eventdata);
             }
         }
@@ -349,6 +424,7 @@ class transaction {
      * @param \stdClass $data extra data to send (translated to key: value)
      */
     protected function message_error_to_admin($subject, $data) {
+        global $CFG;
         $admin = get_admin();
         $site = get_site();
 
@@ -358,17 +434,42 @@ class transaction {
             $message .= "$key => $value\n";
         }
 
-        $eventdata = new \stdClass();
-        $eventdata->modulename = 'moodle';
-        $eventdata->component = 'enrol_classicpay';
-        $eventdata->name = 'classicpay_enrolment';
-        $eventdata->userfrom = $admin;
-        $eventdata->userto = $admin;
-        $eventdata->subject = "CLASSICPAY ERROR: " . $subject;
-        $eventdata->fullmessage = $message;
-        $eventdata->fullmessageformat = FORMAT_PLAIN;
-        $eventdata->fullmessagehtml = '';
-        $eventdata->smallmessage = '';
+        if (class_exists('\\core\\message\\message')) {
+            $eventdata = new \core\message\message();
+            $eventdata->modulename = 'moodle';
+            $eventdata->component = 'enrol_classicpay';
+            $eventdata->name = 'classicpay_enrolment';
+            $eventdata->userfrom = $admin;
+            $eventdata->userto = $admin;
+            $eventdata->subject = "CLASSICPAY ERROR: " . $subject;
+            $eventdata->fullmessage = $message;
+            $eventdata->fullmessageformat = FORMAT_PLAIN;
+            $eventdata->fullmessagehtml = '';
+            $eventdata->smallmessage = '';
+            $eventdata->notification = 1;
+            $eventdata->contexturl = null;
+            $eventdata->contexturlname = null;
+            $eventdata->replyto = trim($admin->email);
+            $eventdata->attachment = '';
+            $eventdata->attachname = '';
+            // Below is needed on Moodle 3.2.
+            if (isset($CFG->branch) && $CFG->branch >= 32) {
+                $eventdata->courseid = 0;
+                $eventdata->timecreated = time();
+            }
+        } else {
+            $eventdata = new \stdClass();
+            $eventdata->modulename = 'moodle';
+            $eventdata->component = 'enrol_classicpay';
+            $eventdata->name = 'classicpay_enrolment';
+            $eventdata->userfrom = $admin;
+            $eventdata->userto = $admin;
+            $eventdata->subject = "CLASSICPAY ERROR: " . $subject;
+            $eventdata->fullmessage = $message;
+            $eventdata->fullmessageformat = FORMAT_PLAIN;
+            $eventdata->fullmessagehtml = '';
+            $eventdata->smallmessage = '';
+        }
         message_send($eventdata);
     }
 
@@ -410,7 +511,7 @@ class transaction {
         }
 
         curl_close($ch);
-        // ...
+
         $returndata = json_decode($result);
         return $returndata;
     }

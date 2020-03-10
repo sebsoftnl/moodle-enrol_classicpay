@@ -27,6 +27,8 @@
  * @license     http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
+defined('MOODLE_INTERNAL') || die();
+
 /**
  * enrol_classicpay_plugin
  *
@@ -36,9 +38,6 @@
  * @author      R.J. van Dongen <rogier@sebsoft.nl>
  * @license     http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-
-defined('MOODLE_INTERNAL') || die();
-
 class enrol_classicpay_plugin extends enrol_plugin {
 
     /**
@@ -211,7 +210,7 @@ class enrol_classicpay_plugin extends enrol_plugin {
      * @return string html text, usually a form in a text box
      */
     public function enrol_page_hook(stdClass $instance) {
-        global $USER, $OUTPUT, $DB;
+        global $USER, $OUTPUT, $DB, $CFG;
 
         $gatewaymethod = optional_param('gateway', false, PARAM_ALPHA);
 
@@ -233,6 +232,14 @@ class enrol_classicpay_plugin extends enrol_plugin {
 
         if (abs($cost) < 0.01 || isguestuser()) { // No cost, other enrolment methods (instances) should be used.
             return ob_get_clean();
+        }
+
+        // Limiting to specified cohort.
+        if ($instance->customint5) {
+            require_once("$CFG->dirroot/cohort/lib.php");
+            if (!cohort_is_member($instance->customint5, $USER->id)) {
+                return ob_get_clean();
+            }
         }
 
         $course = $DB->get_record('course', array('id' => $instance->courseid));
@@ -285,6 +292,16 @@ class enrol_classicpay_plugin extends enrol_plugin {
             $instance = reset($instances);
             $instanceid = $instance->id;
         } else {
+            if (!empty($data->customint5)) {
+                if ($step->get_task()->is_samesite()) {
+                    // Keep cohort restriction unchanged - we are on the same site.
+                    $data->customint5 = $data->customint5;
+                } else {
+                    // Use some id that can not exist in order to prevent self enrolment,
+                    // because we do not know what cohort it is in this site.
+                    $data->customint5 = -1;
+                }
+            }
             $instanceid = $this->add_instance($course, (array)$data);
         }
         $step->set_mapping('enrol', $oldid, $instanceid);

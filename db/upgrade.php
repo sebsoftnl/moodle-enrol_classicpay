@@ -26,7 +26,6 @@
  * @author      R.J. van Dongen <rogier@sebsoft.nl>
  * @license     http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-
 defined('MOODLE_INTERNAL') || die();
 
 /**
@@ -37,7 +36,6 @@ defined('MOODLE_INTERNAL') || die();
  */
 function xmldb_enrol_classicpay_upgrade($oldversion) {
     global $DB;
-    /* @var $dbman database_manager */
     $dbman = $DB->get_manager();
 
     if ($oldversion < 2015060102) {

@@ -92,6 +92,7 @@ if ($mform->is_cancelled()) {
             $instance->cost = unformat_float($data->cost);
             $instance->customint1 = intval($data->customint1);
             $instance->customint2 = intval($data->customint2);
+            $instance->customint5 = intval($data->customint5);
             $instance->currency = $data->currency;
             $instance->roleid = $data->roleid;
             $instance->enrolperiod = $data->enrolperiod;
@@ -114,6 +115,7 @@ if ($mform->is_cancelled()) {
                 'cost' => unformat_float($data->cost),
                 'customint1' => intval($data->customint1),
                 'customint2' => intval($data->customint2),
+                'customint5' => intval($data->customint5),
                 'currency' => $data->currency,
                 'roleid' => $data->roleid,
                 'enrolperiod' => $data->enrolperiod,
