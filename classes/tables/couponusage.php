@@ -29,6 +29,8 @@
 
 namespace enrol_classicpay\tables;
 
+defined('MOODLE_INTERNAL') || die();
+
 require_once($CFG->libdir . '/tablelib.php');
 
 /**
@@ -40,6 +42,7 @@ require_once($CFG->libdir . '/tablelib.php');
  * @author      R.J. van Dongen <rogier@sebsoft.nl>
  * @license     http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
+
 class couponusage extends \table_sql {
 
     /**

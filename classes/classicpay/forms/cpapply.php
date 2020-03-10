@@ -30,8 +30,9 @@
 namespace enrol_classicpay\classicpay\forms;
 use enrol_classicpay\classicpay\api;
 
-require_once($CFG->libdir . '/formslib.php');
+defined('MOODLE_INTERNAL') || die();
 
+require_once($CFG->libdir . '/formslib.php');
 
 /**
  * application form for PAYNL
