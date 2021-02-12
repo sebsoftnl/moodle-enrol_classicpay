@@ -1,3 +1,7 @@
+Version 2021020101 (Release 3.7.1 (build 2021020101))
+* Add 1 to coupon usage (as indicated by Hoda Farazandeh).
+
+-----
 Version 2021020100 (Release 3.7.0 (build 2021020100))
 * Added privacy language strings
 * Validated working for 3.9 / 3.10

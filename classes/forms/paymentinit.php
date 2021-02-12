@@ -197,6 +197,11 @@ class paymentinit extends \moodleform {
         if ($freeenrol) {
             $transaction = new \enrol_classicpay\transaction($record);
             $transaction->synchronize();
+            if ($coupon !== null) {
+                // Set coupon used.
+                $coupon->numused++;
+                $DB->update_record('enrol_classicpay_coupon', $coupon);
+            }
             $url = new \moodle_url('/course/view.php', array('id' => $course->id));
             $message = '<p style="text-align: center">' . get_string('enrol:ok', 'enrol_classicpay', $course) . '</p>';
             redirect($url, $message);
