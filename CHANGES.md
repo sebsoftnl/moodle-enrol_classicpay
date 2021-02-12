@@ -1,3 +1,9 @@
+Version 2021020100 (Release 3.7.0 (build 2021020100))
+* Added privacy language strings
+* Validated working for 3.9 / 3.10
+* Changed pix_url  to image_url (thought that was done already, alas....)
+
+-----
 Version 2017111300 (Release 3.0.0 (build 2017111300))
 * Implemented privacy API
 * Added CHANGELOG.md

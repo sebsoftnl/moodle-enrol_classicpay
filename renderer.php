@@ -428,12 +428,12 @@ class enrol_classicpay_renderer extends plugin_renderer_base {
             $text = '', $title = '', $linkedwhenselected = false) {
         $img = '';
         if ($pix !== null) {
-            $img = $this->pix_url($pix, $component) . ' ';
+            $img = $this->image_url($pix, $component) . ' ';
             $img = '<img src="' . $img . '"';
             if (!empty($title)) {
                 $img .= ' alt="' . $title . '"';
             }
-            $img .= '/> ';
+            $img .= ' class="icon"/> ';
         }
         return new \tabobject($id, $link, $img . $text, empty($title) ? $text : $title, $linkedwhenselected);
     }

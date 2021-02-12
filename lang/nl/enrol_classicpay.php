@@ -325,3 +325,20 @@ $string['apply:bic_help'] = 'BIC of SWIFT code';
 $string['enablecoupon'] = 'Gebruik van coupons inschakelen?';
 $string['enablecoupon_help'] = 'Vink dezeoptie aan als je standaard het invullen van coupon codes wilt inschakelen in het betaalscherm.
 Je kunt dit per enrolment instantie aan of uitschakelen.';
+
+$string['privacy:metadata:enrol_classicpay'] = 'De classicpay aanmeldplugin verzend gebruikersgegevens naar de website van PayNL.';
+$string['privacy:metadata:enrol_classicpay:userid'] = 'GebruikersID';
+$string['privacy:metadata:enrol_classicpay:courseid'] = 'Cursus ID';
+$string['privacy:metadata:enrol_classicpay:instanceid'] = 'Aanmeld gegevensrij ID';
+$string['privacy:metadata:enrol_classicpay:orderid'] = 'Referentie naar bestelID';
+$string['privacy:metadata:enrol_classicpay:status'] = 'Statuscode van bestelling';
+$string['privacy:metadata:enrol_classicpay:statusname'] = 'Statusnaam van bestelling';
+$string['privacy:metadata:enrol_classicpay:gateway_transaction_id'] = 'Transactie ID bij PayNL';
+$string['privacy:metadata:enrol_classicpay:gateway'] = 'Gebruikte gateway';
+$string['privacy:metadata:enrol_classicpay:rawcost'] = 'Bruto kosten van de bestelling';
+$string['privacy:metadata:enrol_classicpay:cost'] = 'Totale kosten van bestelling';
+$string['privacy:metadata:enrol_classicpay:percentage'] = 'Berekend kortingspercentage op bestelling';
+$string['privacy:metadata:enrol_classicpay:discount'] = 'Berekende korting op bestelling';
+$string['privacy:metadata:enrol_classicpay:hasinvoice'] = 'Heeft bestelling een bijbehorende factuur?';
+$string['privacy:metadata:enrol_classicpay:timecreated'] = 'Tijdstip van aanmaken van bestelling';
+$string['privacy:metadata:enrol_classicpay:timemodified'] = 'Tijdstip van laatste wijziging voor bestelling';

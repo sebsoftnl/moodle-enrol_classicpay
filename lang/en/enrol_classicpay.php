@@ -326,3 +326,20 @@ $string['apply:bic_help'] = 'BIC or SWIFT code';
 $string['enablecoupon'] = 'Enable coupons?';
 $string['enablecoupon_help'] = 'Check this option to enable entering of coupons by default in the payment screen.
 You can enable or disable it on a per enrolment instance level.';
+
+$string['privacy:metadata:enrol_classicpay'] = 'The classicpay enrolment plugin transmits user data from Moodle to the PayNL website.';
+$string['privacy:metadata:enrol_classicpay:userid'] = 'User ID';
+$string['privacy:metadata:enrol_classicpay:courseid'] = 'Course ID';
+$string['privacy:metadata:enrol_classicpay:instanceid'] = 'Enrolment instance ID';
+$string['privacy:metadata:enrol_classicpay:orderid'] = 'Reference to order ID';
+$string['privacy:metadata:enrol_classicpay:status'] = 'Order status code';
+$string['privacy:metadata:enrol_classicpay:statusname'] = 'Order status name';
+$string['privacy:metadata:enrol_classicpay:gateway_transaction_id'] = 'Transaction ID for PayNL';
+$string['privacy:metadata:enrol_classicpay:gateway'] = 'Gateway used';
+$string['privacy:metadata:enrol_classicpay:rawcost'] = 'Raw cost of this order';
+$string['privacy:metadata:enrol_classicpay:cost'] = 'Final cost of this order';
+$string['privacy:metadata:enrol_classicpay:percentage'] = 'Calculated discount percentage';
+$string['privacy:metadata:enrol_classicpay:discount'] = 'Calculated discount';
+$string['privacy:metadata:enrol_classicpay:hasinvoice'] = 'Whether or not this order has an invoice';
+$string['privacy:metadata:enrol_classicpay:timecreated'] = 'Time the order record was created';
+$string['privacy:metadata:enrol_classicpay:timemodified'] = 'Time the order record was last updated';

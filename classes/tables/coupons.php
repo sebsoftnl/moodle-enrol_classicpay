@@ -356,8 +356,8 @@ class coupons extends \table_sql {
      */
     protected function get_action_image($action) {
         global $OUTPUT;
-        return '<img src="' . $OUTPUT->pix_url($action, 'enrol_classicpay') .
-                '" title="' . get_string('coupon:' . $action, 'enrol_classicpay') . '"/>';
+        return '<img src="' . $OUTPUT->image_url($action, 'enrol_classicpay') .
+                '" title="' . get_string('coupon:' . $action, 'enrol_classicpay') . '" class="icon"/>';
     }
 
     /**

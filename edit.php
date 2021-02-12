@@ -64,6 +64,8 @@ if ($instanceid) {
     $instance->courseid = $course->id;
     $instance->expirynotify    = $plugin->get_config('expirynotify');
     $instance->expirythreshold = $plugin->get_config('expirythreshold');
+    // Force customint5 to prevent notices.
+    $instance->customint5 = null;
 }
 
 $mform = new enrol_classicpay_edit_form(null, array($instance, $plugin, $context));

@@ -34,9 +34,9 @@ if ($ADMIN->fulltree) {
     $config = get_config('enrol_classicpay');
     // Logo.
     $image = '<a href="http://www.sebsoft.nl" target="_new"><img src="' .
-            $OUTPUT->pix_url('logo', 'enrol_classicpay') . '" /></a>&nbsp;&nbsp;&nbsp;';
+            $OUTPUT->image_url('logo', 'enrol_classicpay') . '" /></a>&nbsp;&nbsp;&nbsp;';
     $donate = '<a href="https://customerpanel.sebsoft.nl/sebsoft/donate/intro.php" target="_new"><img src="' .
-            $OUTPUT->pix_url('donate', 'enrol_classicpay') . '" /></a>';
+            $OUTPUT->image_url('donate', 'enrol_classicpay') . '" /></a>';
     $header = '<div class="block-selectrss-logopromo">' . $image . $donate . '</div>';
     $settings->add(new admin_setting_heading('enrol_classicpay_logopromo',
             get_string('promo', 'enrol_classicpay'),
