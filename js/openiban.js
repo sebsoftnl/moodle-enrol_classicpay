@@ -36,12 +36,13 @@ Y.use('node', 'io', function(Y) {
                 if (enrol_classicpay_ibanxhr !== null) {
                     enrol_classicpay_ibanxhr.abort();
                 }
+                console.log(e);
 
                 enrol_classicpay_ibanxhr = Y.io('https://openiban.com/validate/' + ibanelement.get('value'), {
                     method: 'GET',
                     data: 'validateBankCode=1&getBIC=1',
                     headers: {'X-Requested-With': 'disable'},
-                    on: {
+                    on:{
                         success: function (id, result) {
                             var response = JSON.parse(result.responseText);
                             if (response.valid === true) {

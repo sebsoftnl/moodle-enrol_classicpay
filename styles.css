@@ -70,7 +70,9 @@ div.enrol-classicpay-logopromo a img {
 }
 
 /* creditcard */
-.pp_s25.pp11, .pp_s25.pp706, .pp_s25.pp709,
+.pp_s25.pp11,
+.pp_s25.pp706,
+.pp_s25.pp709,
 .pp_s25.pp902 {
     background-position: 0 -75px;
     width: 25px;

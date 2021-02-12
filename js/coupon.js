@@ -29,6 +29,10 @@
 Y.use('node', 'io', function(Y) {
     Y.on("domready", function() {
         var enrol_classicpay_xhr = null;
+
+        /**
+         * Check if the coupon is valid.
+         */
         function enrol_classicpay_docheckcoupon() {
             var courseid = Y.one('input[name="courseid"]').get('value');
             var instanceid = Y.one('input[name="instanceid"]').get('value');
@@ -38,11 +42,11 @@ Y.use('node', 'io', function(Y) {
                 enrol_classicpay_xhr.abort();
             }
 
-            enrol_classicpay_xhr = Y.io(url, {
+            enrol_classicpay_xhr = Y.io(url,{
                 method: 'POST',
                 data: 'code=' + code + '&courseid=' + courseid + '&instanceid=' + instanceid,
                 on: {
-                    success: function (id, result) {
+                    success: function(id, result) {
                         var response = JSON.parse(result.responseText);
                         if (response.error) {
                             Y.one('#enrol-classicpay-coupondiscount').set('innerHTML', response.error).addClass('error');
@@ -52,7 +56,7 @@ Y.use('node', 'io', function(Y) {
                             Y.one('#enrol-classicpay-basecost').addClass('enrol-classicpay-strike');
                         }
                     },
-                    failure: function (id, result) {
+                    failure: function(id, result) {
                         var response = JSON.parse(result.responseText);
                         if (response.error) {
                             Y.one('#enrol-classicpay-coupondiscount').set('innerHTML', response.error).addClass('error');
@@ -65,6 +69,9 @@ Y.use('node', 'io', function(Y) {
         }
 
         var cp = Y.one('#btncheckcoupon');
-        cp.on('click', function(e){enrol_classicpay_docheckcoupon();e.halt();});
+        cp.on('click', function(e){
+            enrol_classicpay_docheckcoupon();
+            e.halt();
+        });
     });
 });
