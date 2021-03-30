@@ -114,6 +114,10 @@ if ($ADMIN->fulltree) {
             get_string('expirythreshold', 'core_enrol'),
             get_string('expirythreshold_help', 'core_enrol'), 86400, 86400));
 
+    $settings->add(new admin_setting_configtext('enrol_classicpay/htmlonthankyoupage',
+            get_string('htmlonthankyoupage','enrol_classicpay'),
+            get_string('htmlonthankyoupage_desc','enrol_classicpay'),'',PARAM_RAW, 4096));
+
     if (!during_initial_install()) {
         $settingsstr = get_string('paynlsettings_desc', 'enrol_classicpay');
         if (!isset($config->paynlapitoken) || empty($config->paynlapitoken)) {

@@ -464,6 +464,7 @@ class enrol_classicpay_renderer extends plugin_renderer_base {
      */
     public function payment_page_enrol_status($enrolled, $course, $transactionrecord) {
         global $CFG;
+        $config = get_config('enrol_classicpay');
         $out = '';
         $out .= $this->header();
         if ($enrolled) {
@@ -471,6 +472,10 @@ class enrol_classicpay_renderer extends plugin_renderer_base {
             $out .= $this->box('<p style="text-align: center">' . get_string('enrol:ok', 'enrol_classicpay', $course) . '</p>');
             // Send a success message to the user.
             $out .= $this->continue_button(new moodle_url('/course/view.php', array('id' => $course->id)));
+            if (strlen($config->htmlonthankyoupage) > 0)
+            {
+                $out .= $config->htmlonthankyoupage;
+            }
         } else {
             // Send a status message to user.
             $out .= $this->box('<p style="text-align: center">' . get_string('enrol:fail', 'enrol_classicpay', $course) .
@@ -490,11 +495,16 @@ class enrol_classicpay_renderer extends plugin_renderer_base {
      * @return string full page
      */
     public function payment_page_enrol_already_enrolled($course) {
+        $config = get_config('enrol_classicpay');
         $out = '';
         $out .= $this->header();
         // Notify user about successfull enrolment.
         $out .= $this->box('<p style="text-align: center">' . get_string('enrol:ok', 'enrol_classicpay', $course) . '</p>');
         $out .= $this->continue_button(new moodle_url('/course/view.php', array('id' => $course->id)));
+        if (strlen($config->htmlonthankyoupage) > 0)
+        {
+            $out .= $config->htmlonthankyoupage;
+        }
         $out .= $this->footer();
         return $out;
     }

@@ -70,6 +70,12 @@ try {
     $enrolled = $paynltransaction->synchronize();
     // Display status.
     echo $renderer->payment_page_enrol_status($enrolled, $course, $transactionrecord);
+
+    $config = get_config('enrol_classicpay');
+    if (strlen($config->htmlonthankyoupage) > 0)
+    {
+        echo $config->htmlonthankyoupage;
+    }
 } catch (Exception $e) {
     print_error($e->getMessage());
 }

@@ -1,3 +1,7 @@
+Version 2021020102 (Release 3.7.2 (build 2021020102))
+* Introduced new method to thank users for buying a course (thank you Gottmer.nl)
+
+-----
 Version 2021020101 (Release 3.7.1 (build 2021020101))
 * Add 1 to coupon usage (as indicated by Hoda Farazandeh).
 
