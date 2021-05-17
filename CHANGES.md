@@ -1,3 +1,7 @@
+Version ??? (Release 3.7.3 (build ???))
+* Added CANCEL-FAILURE from Pay as valid ending status
+
+-----
 Version 2021020102 (Release 3.7.2 (build 2021020102))
 * Introduced new method to thank users for buying a course (thank you Gottmer.nl)
 
