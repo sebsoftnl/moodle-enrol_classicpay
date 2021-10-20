@@ -61,7 +61,7 @@ class process_orders extends \core\task\scheduled_task {
 
         // We process these 10 at a time.
         $select = 'status NOT IN (?,?, ?, ?)';
-        $params = array(-60 /*CANCEL-FAILURE*/,-80 /*CANCEL-EXPIRE*/, -90 /*CANCEL*/, 100 /*PAID*/);
+        $params = array(-60 /*CANCEL-FAILURE*/, -80 /*CANCEL-EXPIRE*/, -90 /*CANCEL*/, 100 /*PAID*/);
         $results = $DB->get_records_select('enrol_classicpay', $select, $params, 'timecreated DESC', '*', 0, 10);
         foreach ($results as $transactionrecord) {
             try {

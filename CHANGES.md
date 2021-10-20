@@ -1,5 +1,7 @@
 Version 2021102000 (Release 3.7.4)
 * Fixed tables that have errors when moving to other pages in admin interface.
+* Coding standards fixes
+* Modified CI deployment
 
 -----
 

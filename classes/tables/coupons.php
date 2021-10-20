@@ -107,7 +107,7 @@ class coupons extends \table_sql {
      *
      * @return array list of view types
      */
-    static public function get_viewtypes() {
+    public static function get_viewtypes() {
         return array(
             self::ALL,
             self::EXPIRED,
@@ -122,7 +122,7 @@ class coupons extends \table_sql {
      * @param \moodle_url $url base url for the page
      * @return array list of view types
      */
-    static public function get_viewtype_menu($url) {
+    public static function get_viewtype_menu($url) {
         $rs = array();
         foreach (self::get_viewtypes() as $type) {
             $murl = clone $url;

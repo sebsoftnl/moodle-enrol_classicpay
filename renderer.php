@@ -472,8 +472,7 @@ class enrol_classicpay_renderer extends plugin_renderer_base {
             $out .= $this->box('<p style="text-align: center">' . get_string('enrol:ok', 'enrol_classicpay', $course) . '</p>');
             // Send a success message to the user.
             $out .= $this->continue_button(new moodle_url('/course/view.php', array('id' => $course->id)));
-            if (strlen($config->htmlonthankyoupage) > 0)
-            {
+            if (strlen($config->htmlonthankyoupage) > 0) {
                 $out .= $config->htmlonthankyoupage;
             }
         } else {
@@ -501,8 +500,7 @@ class enrol_classicpay_renderer extends plugin_renderer_base {
         // Notify user about successfull enrolment.
         $out .= $this->box('<p style="text-align: center">' . get_string('enrol:ok', 'enrol_classicpay', $course) . '</p>');
         $out .= $this->continue_button(new moodle_url('/course/view.php', array('id' => $course->id)));
-        if (strlen($config->htmlonthankyoupage) > 0)
-        {
+        if (strlen($config->htmlonthankyoupage) > 0) {
             $out .= $config->htmlonthankyoupage;
         }
         $out .= $this->footer();
