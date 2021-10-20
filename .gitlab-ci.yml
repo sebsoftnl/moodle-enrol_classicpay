@@ -12,6 +12,9 @@ variables:
   #MUSTACHE_IGNORE_NAMES: "<file>.mustache, <file2>.mustache, ..., <filen>.mustache"
   PLUGIN: 'enrol_classicpay'
   REPOURL: 'https://github.com/sebsoftnl/moodle-enrol_classicpay'
+  REPOSYS: 'git'
+  # Moodle auto format = 0, Markdown = 4, Flat txt = 2
+  RELEASENOTEFORMAT: '0'
 
 
 .job_template: &job_definition
@@ -135,5 +138,7 @@ release:
       --data-urlencode "frankenstyle=${PLUGIN}"
       --data-urlencode "zipdrafitemtid=${ITEMID}"
       --data-urlencode "vcsrepositoryurl=${REPOURL}"
+      --data-urlencode "vcssystem=${REPOSYS}"
+      --data-urlencode "releasenotesformat=${RELEASENOTEFORMAT}"
       --data-urlencode "vcstag=${CI_COMMIT_TAG}" | jq
 
