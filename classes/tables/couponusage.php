@@ -61,6 +61,16 @@ class couponusage extends \table_sql {
         parent::__construct(__CLASS__ . '-' . $USER->id . '-' . $couponid);
         $this->couponid = $couponid;
         $this->sortable(true, 'timeceated');
+        $this->request  = array(
+                TABLE_VAR_SORT   => 'tsort',
+                TABLE_VAR_HIDE   => 'thide',
+                TABLE_VAR_SHOW   => 'tshow',
+                TABLE_VAR_IFIRST => 'tifirst',
+                TABLE_VAR_ILAST  => 'tilast',
+                TABLE_VAR_PAGE   => 'tpage',
+                TABLE_VAR_RESET  => 'treset',
+                TABLE_VAR_DIR    => 'tdir',
+        );
     }
 
     /**

@@ -90,6 +90,16 @@ class coupons extends \table_sql {
         $this->courseid = $courseid;
         $this->displaytype = $type;
         $this->no_sorting('action');
+        $this->request  = array(
+                TABLE_VAR_SORT   => 'tsort',
+                TABLE_VAR_HIDE   => 'thide',
+                TABLE_VAR_SHOW   => 'tshow',
+                TABLE_VAR_IFIRST => 'tifirst',
+                TABLE_VAR_ILAST  => 'tilast',
+                TABLE_VAR_PAGE   => 'tpage',
+                TABLE_VAR_RESET  => 'treset',
+                TABLE_VAR_DIR    => 'tdir',
+        );
     }
 
     /**

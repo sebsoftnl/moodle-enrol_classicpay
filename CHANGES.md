@@ -1,3 +1,8 @@
+Version 2021102000 (Release 3.7.4)
+* Fixed tables that have errors when moving to other pages in admin interface.
+
+-----
+
 Version ??? (Release 3.7.3 (build ???))
 * Added CANCEL-FAILURE from Pay as valid ending status
 
