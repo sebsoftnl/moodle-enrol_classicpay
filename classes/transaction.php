@@ -210,9 +210,7 @@ class transaction {
         $this->load_validate_external();
         try {
             $this->load_validate_internal();
-        }
-        catch (\Exception $ex)
-        {
+        } catch (\Exception $ex) {
             $this->transactionrecord->status = -90;
             $this->transactionrecord->statusname = 'FROZENERROR';
             $this->transactionrecord->timemodified = time();
