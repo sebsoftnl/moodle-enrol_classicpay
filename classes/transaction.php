@@ -208,7 +208,17 @@ class transaction {
         $this->cp_get_transactioninfo();
         // Validate info and load variables.
         $this->load_validate_external();
-        $this->load_validate_internal();
+        try {
+            $this->load_validate_internal();
+        }
+        catch (\Exception $ex)
+        {
+            $this->transactionrecord->status = -90;
+            $this->transactionrecord->statusname = 'FROZENERROR';
+            $this->transactionrecord->timemodified = time();
+            $DB->update_record('enrol_classicpay', $this->transactionrecord);
+            return false;
+        }
 
         $this->transactionrecord->status = $this->transactioninfo['paymentDetails']['state'];
         $this->transactionrecord->statusname = $this->transactioninfo['paymentDetails']['stateName'];

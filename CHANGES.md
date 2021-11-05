@@ -1,3 +1,8 @@
+Version 2021110500 (Release 3.7.5)
+* Hid error that causes infinite mails if site admin deletes instance with open transactions.
+
+-----
+
 Version 2021102000 (Release 3.7.4)
 * Fixed tables that have errors when moving to other pages in admin interface.
 * Coding standards fixes
