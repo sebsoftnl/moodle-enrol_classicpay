@@ -1,3 +1,8 @@
+Version 2022022200 (Release 3.7.6)
+* Fixed rounding bug sometimes causing differences of 1 cent.
+
+-----
+
 Version 2021110500 (Release 3.7.5)
 * Hid error that causes infinite mails if site admin deletes instance with open transactions.
 
