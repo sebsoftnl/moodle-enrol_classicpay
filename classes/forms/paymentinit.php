@@ -238,7 +238,7 @@ class paymentinit extends \moodleform {
         $enduser['emailAddress'] = $USER->email;
 
         $desc = ((strlen($course->shortname) > 32) ? substr($course->shortname, 0, 29) . "..." : $course->shortname);
-        $finalamount = intval($record->cost * 100);
+        $finalamount = intval(bcmul($record->cost, 100));
 
         $paynl = new \enrol_classicpay\pay\api\start();
         $paynl->set_apitoken(get_config('enrol_classicpay', 'paynlapitoken'));
@@ -251,7 +251,7 @@ class paymentinit extends \moodleform {
         $paynl->set_enduser($enduser);
 
         // Insert / add products (note: VAT is not used for now).
-        $paynl->add_product($instance->courseid, $course->fullname, intval($record->cost * 100), 1, 'N');
+        $paynl->add_product($instance->courseid, $course->fullname, intval(bcmul($record->cost, 100)), 1, 'N');
         if ($coupon !== null) {
             if ($coupon->type === 'percentage') {
                 $discount = intval((($coupon->value / 100) * $record->cost) * -100);
