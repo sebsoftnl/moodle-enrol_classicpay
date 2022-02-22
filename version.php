@@ -31,5 +31,5 @@ $plugin->version     = 2022022200;
 $plugin->requires    = 2018120300;      // YYYYMMDDHH (This is the release version for Moodle 3.6).
 $plugin->component   = 'enrol_classicpay';
 $plugin->maturity    = MATURITY_STABLE;
-$plugin->release     = '3.7.6 (build 2022022200)';
+$plugin->release     = '3.7.7 (build 2022022200)';
 $plugin->dependencies = array();

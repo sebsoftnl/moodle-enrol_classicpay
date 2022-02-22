@@ -203,8 +203,8 @@ class provider implements
             if ($context->contextlevel != CONTEXT_COURSE) {
                 continue;
             }
-            $DB->delete_records_select('enrol_classicpay', 'course = :course AND userid = :userid',
-                    ['course' => $context->instanceid, 'userid' => $user->id]);
+            $DB->delete_records_select('enrol_classicpay', 'courseid = :courseid AND userid = :userid',
+                    ['courseid' => $context->instanceid, 'userid' => $user->id]);
             $DB->execute("DELETE FROM {enrol_classicpay_ivq} WHERE classicpayid NOT IN (SELECT id FROM {enrol_classicpay})");
             $DB->execute("DELETE FROM {enrol_classicpay_cuse} WHERE classicpayid NOT IN (SELECT id FROM {enrol_classicpay})");
         }
