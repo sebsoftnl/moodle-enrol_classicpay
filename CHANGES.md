@@ -1,4 +1,9 @@
-Version 2022022200 (Release 3.7.6)
+Version 2022022201 (Release 3.7.7)
+* Fix on selecting user while trying to delete user data in GDPR cleanup
+
+-----
+
+Version 2022022200 (Release 3.7.6 - Unreleased)
 * Fixed rounding bug sometimes causing differences of 1 cent.
 
 -----
