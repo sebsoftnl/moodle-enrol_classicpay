@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<COMPATIBILITY_MATRIX>
+  <PLUGIN name="enrol_classicpay">
+    <PHP version="7.2" level="required" />
+    <PHP_EXTENSIONS>
+      <PHP_EXTENSION name="bcmath" level="required" />
+      <PHP_EXTENSION name="curl" level="required" />
+    </PHP_EXTENSIONS>
+  </PLUGIN>
+</COMPATIBILITY_MATRIX>
