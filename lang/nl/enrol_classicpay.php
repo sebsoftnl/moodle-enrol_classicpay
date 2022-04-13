@@ -344,3 +344,6 @@ $string['privacy:metadata:enrol_classicpay:discount'] = 'Berekende korting op be
 $string['privacy:metadata:enrol_classicpay:hasinvoice'] = 'Heeft bestelling een bijbehorende factuur?';
 $string['privacy:metadata:enrol_classicpay:timecreated'] = 'Tijdstip van aanmaken van bestelling';
 $string['privacy:metadata:enrol_classicpay:timemodified'] = 'Tijdstip van laatste wijziging voor bestelling';
+
+$string['costerror'] = 'Fout: De prijs moet een cijfer zijn';
+$string['unenrolselfconfirm'] = 'Weet je zeker dat je jezelf wilt afmelden van {$a}?';

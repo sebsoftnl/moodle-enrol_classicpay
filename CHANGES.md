@@ -1,3 +1,9 @@
+Version 2022041300 (Release 3.8)
+* Added compatibility with Moodle 4.0
+* Fix critical issues found in CI
+
+-----
+
 Version 2022022300 (Release 3.7.7.1)
 * Added forced check to see if bcmath php extension is enabled (which is required as of version 3.7.6)
 
