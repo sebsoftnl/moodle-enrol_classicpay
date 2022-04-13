@@ -36,6 +36,7 @@ $string['mailadmins'] = 'Notify admin';
 $string['nocost'] = 'There is no cost associated with enrolling in this course!';
 $string['currency'] = 'Currency';
 $string['cost'] = 'Enrol cost';
+$string['costerror'] = 'Error: the cost must be a numerical value';
 $string['vat'] = 'VAT';
 $string['vat_help'] = 'VAT percentage of course cost (note: course cost is including VAT).';
 $string['assignrole'] = 'Assign role';
@@ -84,6 +85,7 @@ $string['enrol:fail'] = 'You have not been enrolled to this course.';
 $string['enrol:fail:tx'] = 'Your transaction status is: {$a->statusname}.';
 $string['enrol:ok'] = 'Thanks for your purchase.<br> You have now been enrolled for course: {$a->fullname}';
 $string['enrol:already'] = 'You have already been enrolled for course: {$a->fullname}';
+$string['unenrolselfconfirm'] = 'Please confirm you want to unenrol from {$a}?';
 $string['payment:cancelled'] = 'You have cancelled your payment for course: {$a->fullname}';
 
 $string['title:cancelpage'] = 'Payment cancelled';
