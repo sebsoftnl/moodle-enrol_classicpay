@@ -57,7 +57,7 @@ class api {
      * Main base API url
      * @var string
      */
-    protected $apiurl = 'http://rest-api.pay.nl';
+    protected $apiurl = 'https://rest-api.pay.nl';
 
     /**
      * API version for this controller

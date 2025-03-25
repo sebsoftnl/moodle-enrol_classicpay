@@ -1,3 +1,9 @@
+Version 2025032500 (Release 4.0)
+* Improved compatbility with Moodle 4.1+
+* Improved connection to Pay.nl
+
+-----
+
 Version 2022041300 (Release 3.8)
 * Added compatibility with Moodle 4.0
 * Fix critical issues found in CI
