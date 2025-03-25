@@ -65,6 +65,9 @@ class process_orders extends \core\task\scheduled_task {
         $results = $DB->get_records_select('enrol_classicpay', $select, $params, 'timecreated DESC', '*', 0, 10);
         foreach ($results as $transactionrecord) {
             try {
+                if (strlen($transactionrecord->gateway_transaction_id) < 5) {
+                    continue; // Skip record if the gateway_transaction_id is invalid
+                }
                 $paynltransaction = new \enrol_classicpay\transaction($transactionrecord);
                 if (!$paynltransaction->is_paid()) {
                     $paynltransaction->synchronize();
